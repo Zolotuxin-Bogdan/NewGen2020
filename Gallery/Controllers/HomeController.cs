@@ -8,10 +8,9 @@ using System.Windows.Media.Imaging;
 using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
 using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
+using System.Configuration;
 
 namespace Gallery.Controllers
 {
@@ -93,38 +92,19 @@ namespace Gallery.Controllers
 
         public static void LoadExifData(string LoadExifPath)
         {
+            manufacturer = "Data not found";
+            modelOfCamera = "Data not found";
+            fileSize = "Data not found";
+            dateCreation = "Data not found";
+            dateUpload = "Data not found";
+
+            FileInfo fileInfo = new FileInfo(LoadExifPath);
+            FileStream ExifFileStream = new FileStream(LoadExifPath, FileMode.Open);
             try
             {
-                FileInfo fileInfo = new FileInfo(LoadExifPath);
-                FileStream fs = new FileStream(LoadExifPath, FileMode.Open);
 
-                BitmapSource img = BitmapFrame.Create(fs);
+                BitmapSource img = BitmapFrame.Create(ExifFileStream);
                 BitmapMetadata md = (BitmapMetadata)img.Metadata;
-
-                
-                //
-                //title from FileInfo
-                if (string.IsNullOrEmpty(fileInfo.Name))
-                    title = "Data not found";
-                else
-                    title = fileInfo.Name;
-
-
-                //
-                //manufacturer from EXIF
-                if (string.IsNullOrEmpty(md.CameraManufacturer))
-                    manufacturer = "Data not found";
-                else
-                    manufacturer = md.CameraManufacturer;
-
-
-                //
-                //modelOfCamera from EXIF
-                if (string.IsNullOrEmpty(md.CameraModel))
-                    modelOfCamera = "Data not found";
-                else
-                    modelOfCamera = md.CameraModel;
-
 
                 //
                 //FileSize from FileInfo
@@ -132,49 +112,93 @@ namespace Gallery.Controllers
                 {
                     fileSize = Math.Round((fileInfo.Length / 1024f), 1).ToString() + " KB";
                     if ((fileInfo.Length / 1024f) >= 1024f)
+                    {
                         fileSize = Math.Round((fileInfo.Length / 1024f) / 1024f, 2).ToString() + " MB";
+                    }
                 }
                 else
+                {
                     fileSize = fileInfo.Length.ToString() + " B";
-
-
+                }
+                
                 //
                 //DateUpload from FileInfo
                 if (fileInfo.CreationTime == null)
+                {
                     dateUpload = "Data not found";
+                }
                 else
+                {
                     dateUpload = fileInfo.CreationTime.ToString("dd.MM.yyyy HH:mm:ss");
+                }
 
+                //
+                //title from FileInfo
+                if (string.IsNullOrEmpty(fileInfo.Name))
+                {
+                    title = "Data not found";
+                }
+                else
+                {
+                    title = fileInfo.Name;
+                }
+
+
+                //
+                //manufacturer from EXIF
+                if (string.IsNullOrEmpty(md.CameraManufacturer))
+                {
+                    manufacturer = "Data not found";
+                }
+                else
+                {
+                    manufacturer = md.CameraManufacturer;
+                }
+
+
+                //
+                //modelOfCamera from EXIF
+                if (string.IsNullOrEmpty(md.CameraModel))
+                {
+                    modelOfCamera = "Data not found";
+                }
+                else
+                {
+                    modelOfCamera = md.CameraModel;
+                }
 
                 //
                 //DateCreation from EXIF
                 if (string.IsNullOrEmpty(md.DateTaken))
+                {
                     dateCreation = "Data not found";
+                }
                 else
+                {
                     dateCreation = md.DateTaken;
-                fs.Close();
+                }
             }
             catch(Exception err)
             {
                
                 // need to static errors
             }
-       
-            
+            ExifFileStream.Close();
+
         }
         //Picture picture = new Picture();
         //[HttpGet]
 
-        
+        string PathFromConfig = ConfigurationManager.AppSettings["PathForSave"];
         [HttpGet]
-        public ActionResult Delete(string T = "")
+        public ActionResult Delete(string pathForDelete = "")
         {
             try
             {
-                if (T.Replace("/Content/Images/", "").Replace(Path.GetFileName(T), "").Replace("/", "") == ComputeSha256Hash(User.Identity.Name))
+                if (pathForDelete.Replace(PathFromConfig, "").Replace(Path.GetFileName(pathForDelete), "").Replace("/", "") == ComputeSha256Hash(User.Identity.Name))
                 {
-                    if (T != "" && Directory.Exists(Server.MapPath(T.Replace(Path.GetFileName(T), ""))))
-                        System.IO.File.Delete(Server.MapPath(T));
+                    if (pathForDelete != "" && Directory.Exists(Server.MapPath(pathForDelete.Replace(Path.GetFileName(pathForDelete), ""))))
+                        System.IO.File.Delete(Server.MapPath(pathForDelete));
                     else
                     {
                         ViewBag.Error = "File not found!";
@@ -215,7 +239,10 @@ namespace Gallery.Controllers
                 {
                     if (!string.IsNullOrEmpty(User.Identity.Name))
                     {
-                        if (files.ContentType == "image/jpeg")
+                        string FormatsList = ConfigurationManager.AppSettings["SupportedPhotoFormat"].Replace(","," ");
+                        string UploadFileFormat = files.ContentType.Replace("image/", "");
+                        bool IsFormatOk = FormatsList.Contains(UploadFileFormat);
+                        if (IsFormatOk)//files.ContentType == "image/jpeg"
                         {
                             FileStream TempFileStream;
                             // Verify that the user selected a file and User is logged in
@@ -224,22 +251,24 @@ namespace Gallery.Controllers
                                 bool IsLoad = true;
 
                                 // Encrypted User's directory path
-                                string DirPath = Server.MapPath("~/Content/Images/") + ComputeSha256Hash(User.Identity.Name);
+                                string DirPath = Server.MapPath(PathFromConfig) + "/" + ComputeSha256Hash(User.Identity.Name);
 
                                 // extract only the filename
                                 var fileName = Path.GetFileName(files.FileName);
+
                                 // store the file inside ~/Content/Temp folder
-                                var TempPath = Path.Combine(Server.MapPath("~/Content/Temp"), fileName);
+                                var TempPath = Path.Combine(Server.MapPath(PathFromConfig), fileName);
                                 files.SaveAs(TempPath);
+
                                 TempFileStream = new FileStream(TempPath, FileMode.Open);
                                 BitmapSource img = BitmapFrame.Create(TempFileStream);
                                 BitmapMetadata md = (BitmapMetadata)img.Metadata;
                                 var DateTaken = md.DateTaken;
                                 TempFileStream.Close();
 
-                                if (!string.IsNullOrEmpty(DateTaken))
+                                if (!string.IsNullOrEmpty(DateTaken) || files.ContentType != "image/jpeg")
                                 {
-                                    if (Convert.ToDateTime(DateTaken) >= DateTime.Now.AddYears(-1))
+                                    if (Convert.ToDateTime(DateTaken) >= DateTime.Now.AddYears(-1) || files.ContentType != "image/jpeg")
                                     {
                                         TempFileStream = new FileStream(TempPath, FileMode.Open);
                                         Bitmap TempBmp = new Bitmap(TempFileStream);
@@ -247,7 +276,7 @@ namespace Gallery.Controllers
                                         TempFileStream.Close();
 
                                         // List of all Directories names
-                                        List<string> dirsname = Directory.GetDirectories(Server.MapPath("~/Content/Images/")).ToList<string>();
+                                        List<string> dirsname = Directory.GetDirectories(Server.MapPath(PathFromConfig)).ToList<string>();
 
                                         FileStream CheckFileStream;
                                         Bitmap CheckBmp;

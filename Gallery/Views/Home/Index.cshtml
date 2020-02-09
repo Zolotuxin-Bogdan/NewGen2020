@@ -3,41 +3,38 @@
 }
 
 
-
-   
-
-
-
-
 @using Gallery.Controllers
+@using System.Configuration
 @{
+
+    string PathFromConfig = ConfigurationManager.AppSettings["PathForSave"];
+
     // Directory path with all User's directories
-    string ImagesDirPath = Server.MapPath("~/Content/Images");
-
-    // Encrypted User's directory path
-    string DirPath = Server.MapPath("~/Content/Images/") + HomeController.ComputeSha256Hash(User.Identity.Name);
-
-    // Directory path with temp files
-    string TempDirPath = Server.MapPath("~/Content/Temp");
+    string ImagesDirPath = Server.MapPath(PathFromConfig);
 
     if (!Directory.Exists(ImagesDirPath))
     {
         Directory.CreateDirectory(ImagesDirPath);
     }
 
-    if (!Directory.Exists(TempDirPath))
-    {
-        Directory.CreateDirectory(TempDirPath);
-    }
+    // Encrypted User's directory path
+    string DirPath = Server.MapPath(PathFromConfig)+ "/" + HomeController.ComputeSha256Hash(User.Identity.Name);
 
     if (!Directory.Exists(DirPath) && User.Identity.Name != "")
     {
         Directory.CreateDirectory(DirPath);
     }
 
-    List<string> dirsname = Directory.GetDirectories(Server.MapPath("~/Content/Images/")).ToList<string>();
-    List<string> filesname;
-    int i = 0;
+    // Directory path with temp files
+    string TempDirPath = Server.MapPath("~/Content/Temp");
+
+    if (!Directory.Exists(TempDirPath))
+    {
+        Directory.CreateDirectory(TempDirPath);
+    }
+
+
+
             
             //The Modal
 
@@ -56,84 +53,87 @@
                 modal.style.display = "none";
             }
         </script>
-    foreach (string dir in dirsname)
-    {
-        filesname = Directory.GetFiles(dir).ToList<string>();
 
-        foreach (string fl in filesname)
+    List<string> directoryList = Directory.GetDirectories(Server.MapPath(PathFromConfig)).ToList<string>();
+    List<string> fileList;
+    int i = 0;
+    foreach (string directory in directoryList)
+    {
+        fileList = Directory.GetFiles(directory).ToList<string>();
+
+        foreach (string fileName in fileList)
         {
             i++;
-            HomeController.LoadExifData(fl);
-<div class="body">
-    <div class="bodyT">
+            HomeController.LoadExifData(fileName);
 
-        <p class="textT">
-            <b>Photo title: @HomeController.title</b>
-        </p>
-        <p class="textT">
-            <b>Manufacturer of the camera: @HomeController.manufacturer</b>
-        </p>
-        <p class="textT">
-            <b>Model of the camera: @HomeController.modelOfCamera</b>
-        </p>
-        <p class="textT">
-            <b>File size: @HomeController.fileSize</b>
-        </p>
-        <p class="textT">
-            <b>Date of creation of the photo: @HomeController.dateCreation</b>
-        </p>
-        <p class="textT">
-            <b>Date of uploading of the photo: @HomeController.dateUpload</b>
-        </p>
-    </div>
 
-    <div class="hov">
-        <a class="picture">
-            <img id="@i" class="pictureIMG" src="~/Content/Images/@dir.Replace(Server.MapPath("~/Content/Images/"), "").Replace('\\', '/')/@Path.GetFileName(fl)" alt="@Path.GetFileName(fl)">
-        </a>
-        <ul class="pictureDownload">
-            <a href="~/Content/Images/@dir.Replace(Server.MapPath("~/Content/Images/"), "").Replace('\\', '/')/@Path.GetFileName(fl)" download>
-                <i class="fa fa-download" style="color:green; text-shadow: 2px 2px 3px #000" aria-hidden="true"></i>
-            </a>
-        </ul>
-            @using (Html.BeginForm("Delete", "Home", FormMethod.Get, new { enctype = "string" }))
-            {  
-                <input type="text" name="T" value="~/Content/Images/@dir.Replace(Server.MapPath("~/Content/Images/"), "").Replace('\\', '/')/@Path.GetFileName(fl)" hidden />
+            <div class="body">
+                <div class="bodyT">
 
-                if (dir.Replace(Server.MapPath("~/Content/Images/"), "") == HomeController.ComputeSha256Hash(User.Identity.Name))
-                {
-                    <button type="submit" class="pictureDelete" aria-label="Delete">
+                    <p class="textT">
+                        <b>Photo title: @HomeController.title</b>
+                    </p>
+                    <p class="textT">
+                        <b>Manufacturer of the camera: @HomeController.manufacturer</b>
+                    </p>
+                    <p class="textT">
+                        <b>Model of the camera: @HomeController.modelOfCamera</b>
+                    </p>
+                    <p class="textT">
+                        <b>File size: @HomeController.fileSize</b>
+                    </p>
+                    <p class="textT">
+                        <b>Date of creation of the photo: @HomeController.dateCreation</b>
+                    </p>
+                    <p class="textT">
+                        <b>Date of uploading of the photo: @HomeController.dateUpload</b>
+                    </p>
+                </div>
 
-                        <i class="fa fa-trash" style="color:darkred; text-shadow: 2px 2px 3px #000" aria-hidden="true"></i>
+                <div class="hov">
+                    <a class="picture">
+                        <img id="@i" class="pictureIMG" src="@PathFromConfig@directory.Replace(Server.MapPath(PathFromConfig), "").Replace('\\', '/')/@Path.GetFileName(fileName)" alt="@Path.GetFileName(fileName)">
+                    </a>
+                    <ul class="pictureDownload">
+                        <a href="@PathFromConfig@directory.Replace(Server.MapPath(PathFromConfig), "").Replace('\\', '/')/@Path.GetFileName(fileName)" download>
+                            <i class="fa fa-download" style="color:green; text-shadow: 2px 2px 3px #000" aria-hidden="true"></i>
+                        </a>
+                    </ul>
 
-                    </button>
-                }
-            }
-
-        </div>
+                    <script>
+                        alert(@directory.Replace(Server.MapPath(PathFromConfig + "\\"), ""));
+                    </script>
+                    @using (Html.BeginForm("Delete", "Home", FormMethod.Get, new { enctype = "string" }))
+                    {
+                        <input type="text" name="pathForDelete" value="@PathFromConfig@directory.Replace(Server.MapPath(PathFromConfig), "").Replace('\\', '/')/@Path.GetFileName(fileName)" hidden />
 
 
 
+                        if (directory.Replace(Server.MapPath(PathFromConfig + "\\"), "") == HomeController.ComputeSha256Hash(User.Identity.Name))
+                        {
+                            <button type="submit" class="pictureDelete" aria-label="Delete">
+
+                                <i class="fa fa-trash" style="color:darkred; text-shadow: 2px 2px 3px #000" aria-hidden="true"></i>
+
+                            </button>
+                        }
+                    }
+
+                </div>
 
 
-
-
-
-    <script>
-            // Get the image and insert it inside the modal - use its "alt" text as a caption
-            var img = document.getElementById("@i");
-            var modalImg = document.getElementById("img01");
-            var captionText = document.getElementById("caption");
-            img.onclick = function () {
-                modal.style.display = "block";
-                modalImg.src = this.src;
-                captionText.innerHTML = this.alt;
-            }
-    </script>
-    
-                        
-
-</div>
+                <script>
+                        // Get the image and insert it inside the modal - use its "alt" text as a caption
+                        var img = document.getElementById("@i");
+                        var modalImg = document.getElementById("img01");
+                        var captionText = document.getElementById("caption");
+                        img.onclick = function () {
+                            modal.style.display = "block";
+                            modalImg.src = this.src;
+                            captionText.innerHTML = this.alt;
+                        }
+                        </script>
+                    </div>
         }
     }
 }
