@@ -1,3 +1,4 @@
 .vs
 packages
-Gallery/obj/
+Gallery/obj
+Gallery/bin
