@@ -5,6 +5,7 @@
 
 @using Gallery.Controllers
 @using System.Configuration
+@using Gallery.Core
 @{
 
     string PathFromConfig = ConfigurationManager.AppSettings["PathForSave"];
@@ -18,7 +19,7 @@
     }
 
     // Encrypted User's directory path
-    string DirPath = Server.MapPath(PathFromConfig)+ "/" + HomeController.ComputeSha256Hash(User.Identity.Name);
+    string DirPath = Server.MapPath(PathFromConfig) + "/" + HashService.ComputeSha256Hash(User.Identity.Name);
 
     if (!Directory.Exists(DirPath) && User.Identity.Name != "")
     {
@@ -35,24 +36,24 @@
 
 
 
-            
-            //The Modal
 
-        <div id="myModal" class="modal">
-            <img class="modal-content" id="img01">
-            <div id="caption"></div>
-        </div>
-        <script>
-             // Get the modal
-            var modal = document.getElementById('myModal');
-                    // Get the <span> element that closes the modal
-            var span = document.getElementsByClassName("modal")[0];
+    //The Modal
 
-            // When the user clicks on <span> (x), close the modal
-            span.onclick = function () {
-                modal.style.display = "none";
-            }
-        </script>
+    <div id="myModal" class="modal">
+        <img class="modal-content" id="img01">
+        <div id="caption"></div>
+    </div>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('myModal');
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("modal")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+    </script>
 
     List<string> directoryList = Directory.GetDirectories(Server.MapPath(PathFromConfig)).ToList<string>();
     List<string> fileList;
@@ -109,7 +110,7 @@
 
 
 
-                        if (directory.Replace(Server.MapPath(PathFromConfig + "\\"), "") == HomeController.ComputeSha256Hash(User.Identity.Name))
+                        if (directory.Replace(Server.MapPath(PathFromConfig + "\\"), "") == HashService.ComputeSha256Hash(User.Identity.Name))
                         {
                             <button type="submit" class="pictureDelete" aria-label="Delete">
 
@@ -132,8 +133,8 @@
                             modalImg.src = this.src;
                             captionText.innerHTML = this.alt;
                         }
-                        </script>
-                    </div>
+                </script>
+            </div>
         }
     }
 }

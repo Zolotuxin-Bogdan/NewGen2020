@@ -11,6 +11,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
 using System.Configuration;
+using Gallery.Core;
 
 namespace Gallery.Controllers
 {
@@ -23,28 +24,7 @@ namespace Gallery.Controllers
         public static string dateCreation;
         public static string dateUpload;
 
-        //
-        // Hash-Function
-        // Input: String
-        // Otput: String with ShaHash
-        //
-        public static string ComputeSha256Hash(string rawData)
-        {
-            // Create a SHA256   
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                // ComputeHash - returns byte array  
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
-
-                // Convert byte array to a string   
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
-        }
+        
 
         //
         // check for equality of pictures
@@ -195,7 +175,7 @@ namespace Gallery.Controllers
         {
             try
             {
-                if (pathForDelete.Replace(PathFromConfig, "").Replace(Path.GetFileName(pathForDelete), "").Replace("/", "") == ComputeSha256Hash(User.Identity.Name))
+                if (pathForDelete.Replace(PathFromConfig, "").Replace(Path.GetFileName(pathForDelete), "").Replace("/", "") == HashService.ComputeSha256Hash(User.Identity.Name))
                 {
                     if (pathForDelete != "" && Directory.Exists(Server.MapPath(pathForDelete.Replace(Path.GetFileName(pathForDelete), ""))))
                         System.IO.File.Delete(Server.MapPath(pathForDelete));
@@ -251,7 +231,7 @@ namespace Gallery.Controllers
                                 bool IsLoad = true;
 
                                 // Encrypted User's directory path
-                                string DirPath = Server.MapPath(PathFromConfig) + "/" + ComputeSha256Hash(User.Identity.Name);
+                                string DirPath = Server.MapPath(PathFromConfig) + "/" + HashService.ComputeSha256Hash(User.Identity.Name);
 
                                 // extract only the filename
                                 var fileName = Path.GetFileName(files.FileName);
