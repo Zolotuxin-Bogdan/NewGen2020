@@ -1,6 +1,9 @@
+Gallery_OLD
 .vs
-packages
-Gallery/obj
-Gallery/bin
-Gallery.Core/obj
-Gallery.Core/bin
+Gallery_NEW/packages
+Gallery_NEW/Gallery.PL/obj
+Gallery_NEW/Gallery.PL/bin
+Gallery_NEW/Gallery.BLL/obj
+Gallery_NEW/Gallery.BLL/bin
+Gallery_NEW/Gallery.DAL/obj
+Gallery_NEW/Gallery.DAL/bin
