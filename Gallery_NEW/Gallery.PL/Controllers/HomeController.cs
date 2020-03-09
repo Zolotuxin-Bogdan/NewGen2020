@@ -188,7 +188,7 @@ namespace Gallery.Controllers
                                 bool IsLoad = true;
 
                                 // Encrypted User's directory path
-                                string DirPath = Server.MapPath(PathFromConfig) + "/" + HashService.ComputeSha256Hash("Bohdan");
+                                string DirPath = Server.MapPath(PathFromConfig) + "/" + HashService.ComputeSha256Hash(User.Identity.Name);
 
                                 // extract only the filename
                                 var fileName = Path.GetFileName(files.FileName);

@@ -19,9 +19,9 @@
     }
 
     // Encrypted User's directory path
-    string DirPath = Server.MapPath(PathFromConfig) + "/" + HashService.ComputeSha256Hash("Bohdan");
+    string DirPath = Server.MapPath(PathFromConfig) + "/" + HashService.ComputeSha256Hash(User.Identity.Name);
 
-    if (!Directory.Exists(DirPath)) //if (!Directory.Exists(DirPath) && User.Identity.Name != "")
+    if (!Directory.Exists(DirPath) && User.Identity.Name != "")
     {
         Directory.CreateDirectory(DirPath);
     }
@@ -109,7 +109,7 @@
 
 
 
-                        if (directory.Replace(Server.MapPath(PathFromConfig + "\\"), "") == HashService.ComputeSha256Hash("Bohdan"))
+                        if (directory.Replace(Server.MapPath(PathFromConfig + "\\"), "") == HashService.ComputeSha256Hash(User.Identity.Name))
                         {
                             <button type="submit" class="pictureDelete" aria-label="Delete">
 

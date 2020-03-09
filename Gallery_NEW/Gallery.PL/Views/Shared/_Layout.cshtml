@@ -23,7 +23,15 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Upload Images", "Upload", "Home")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Upload Images", "Upload", "Home")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Upload Images", "Login", "Account")</li>
+                    }
+                    @Html.Partial("_LayoutAdditional")
                 </ul>
             </div>
         </div>
