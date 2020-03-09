@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Gallery.DAL
 {
-    public class Class1
+    public class User
     {
+        public int ID { get; set; }
+        public int EMail { get; set; }
+        public int Password { get; set; }
     }
 }
