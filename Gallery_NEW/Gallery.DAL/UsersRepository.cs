@@ -16,7 +16,12 @@ namespace Gallery.DAL
         public async Task<bool> IsUserExistAsync(string username, string password)
         {
             return await _ctx.Users.AnyAsync(u => u.EMail == username.Trim().ToLower() &&
-                                             u.Password == username.Trim());
+                                             u.Password == password.Trim());
         }
+        /*public async Task<???> RegisterUserToDatabase(string username, string password)
+        {
+            _ctx.Users.Add(new User { EMail = username, Password = password });
+            _ctx.SaveChanges();
+        }*/
     }
 }
