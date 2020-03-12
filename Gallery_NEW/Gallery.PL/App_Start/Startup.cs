@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Threading.Tasks;
 using Microsoft.Owin;
 using Owin;
-using Microsoft.Owin.Security.Cookies;
+
+[assembly: OwinStartup(typeof(Gallery.PL.App_Start.Startup))]
 
 namespace Gallery.PL.App_Start
 {
@@ -12,11 +11,7 @@ namespace Gallery.PL.App_Start
     {
         public void Configuration(IAppBuilder app)
         {
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationType = "ApplicationCookie",
-                LoginPath = new PathString("/Account/Login")
-            });
+            // Дополнительные сведения о настройке приложения см. на странице https://go.microsoft.com/fwlink/?LinkID=316888
         }
     }
 }
