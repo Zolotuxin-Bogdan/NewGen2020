@@ -19,11 +19,15 @@
     }
 
     // Encrypted User's directory path
-    string DirPath = Server.MapPath(PathFromConfig) + "/" + HashService.ComputeSha256Hash(User.Identity.Name);
+    //string DirPath = Server.MapPath(PathFromConfig) + "/" + HashService.ComputeSha256Hash(User.Identity.Name);
 
-    if (!Directory.Exists(DirPath) && User.Identity.Name != "")
+    if (User.Identity.Name != null)
     {
-        Directory.CreateDirectory(DirPath);
+        string DirPath = Server.MapPath(PathFromConfig) + "/" + HashService.ComputeSha256Hash(User.Identity.Name);
+        if (!Directory.Exists(DirPath))
+        {
+            Directory.CreateDirectory(DirPath);
+        }
     }
 
     // Directory path with temp files
@@ -44,7 +48,7 @@
         <div id="caption"></div>
     </div>
     <script>
-    // Get the modal
+        // Get the modal
         var modal = document.getElementById('myModal');
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("modal")[0];

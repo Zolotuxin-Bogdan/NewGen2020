@@ -2,9 +2,11 @@
 using Gallery.BLL.Contracts;
 using Gallery.DAL;
 using Gallery.DAL.Model;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -22,6 +24,14 @@ namespace Gallery.PL.Controllers
 
         public AccountController() : this(new UsersService(new UsersRepository(new UserContext()))) { }
 
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
         public ActionResult Login()
         {
             return View();
@@ -37,7 +47,15 @@ namespace Gallery.PL.Controllers
 
                 if (canAuthorize)
                 {
-                    FormsAuthentication.SetAuthCookie(model.Name, true);
+                    ClaimsIdentity claim = new ClaimsIdentity("ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                    claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, model.Name, ClaimValueTypes.String));
+                    claim.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", "OWIN Provider", ClaimValueTypes.String));
+                    AuthenticationManager.SignOut();
+                    AuthenticationManager.SignIn(new AuthenticationProperties
+                    {
+                        IsPersistent = true
+                    }, claim);
+                    //FormsAuthentication.SetAuthCookie(model.Name, true);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -66,7 +84,14 @@ namespace Gallery.PL.Controllers
                     CreateUserDTO userDTO = new CreateUserDTO(model.Name, model.Password);
                     await _usersService.RegisterUserAsync(userDTO);
 
-                    FormsAuthentication.SetAuthCookie(model.Name, true);
+                    ClaimsIdentity claim = new ClaimsIdentity("ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+                    claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, model.Name, ClaimValueTypes.String));
+                    claim.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", "OWIN Provider", ClaimValueTypes.String));
+                    AuthenticationManager.SignOut();
+                    AuthenticationManager.SignIn(new AuthenticationProperties
+                    {
+                        IsPersistent = true
+                    }, claim);
                     return RedirectToAction("Index", "Home");
 
                 }
@@ -80,7 +105,8 @@ namespace Gallery.PL.Controllers
 
         public ActionResult Logout()
         {
-            return View();
+            AuthenticationManager.SignOut();
+            return RedirectToAction("Index", "Home");
         }
 
     }
