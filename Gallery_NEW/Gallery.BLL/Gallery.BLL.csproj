@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\CreateUserDTO.cs" />
     <Compile Include="Contracts\UserDTO.cs" />
     <Compile Include="ImageService.cs" />
     <Compile Include="HashService.cs" />

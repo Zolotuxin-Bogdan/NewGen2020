@@ -10,7 +10,6 @@ namespace Gallery.DAL
     {
         Task<bool> IsUserExistAsync(string username, string password);
 
-       // We need to Register User in Database
-       // Task<???> RegisterUserToDatabase(string username, string password);
+        Task RegisterUserToDatabase(string username, string password);
     }
 }

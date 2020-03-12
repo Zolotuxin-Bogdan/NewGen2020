@@ -12,5 +12,7 @@ namespace Gallery.BLL
         Task<UserDTO> FindUserAsync(string username, string password);
 
         Task<bool> IsUserExistAsync(string username, string password);
+
+        Task RegisterUserAsync(CreateUserDTO dto);
     }
 }

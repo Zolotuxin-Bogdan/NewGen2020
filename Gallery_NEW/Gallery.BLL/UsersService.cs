@@ -21,5 +21,10 @@ namespace Gallery.BLL
             throw new NotImplementedException();
         }
 
+        public async Task RegisterUserAsync(CreateUserDTO dto)
+        {
+            await _repo.RegisterUserToDatabase(dto.EMail, dto.Password);
+        }
+
     }
 }

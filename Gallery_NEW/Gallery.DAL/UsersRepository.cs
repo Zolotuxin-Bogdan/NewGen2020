@@ -18,10 +18,11 @@ namespace Gallery.DAL
             return await _ctx.Users.AnyAsync(u => u.EMail == username.Trim().ToLower() &&
                                              u.Password == password.Trim());
         }
-        /*public async Task<???> RegisterUserToDatabase(string username, string password)
+
+        public async Task RegisterUserToDatabase(string username, string password)
         {
             _ctx.Users.Add(new User { EMail = username, Password = password });
             _ctx.SaveChanges();
-        }*/
+        }
     }
 }

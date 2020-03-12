@@ -1,4 +1,5 @@
 ﻿using Gallery.BLL;
+using Gallery.BLL.Contracts;
 using Gallery.DAL;
 using Gallery.DAL.Model;
 using System;
@@ -62,18 +63,8 @@ namespace Gallery.PL.Controllers
 
                 if (isUserExist == false)
                 {
-                    
-                    // Register New User into Database
-                    using (UserContext database = new UserContext())
-                    {
-                        /* RegisterUserToDatabase(model.Name, model.Password) */
-
-                        // Exchange with top sentence
-                        database.Users.Add(new User { EMail = model.Name, Password = model.Password });
-                        database.SaveChanges();
-                        //
-
-                    }
+                    CreateUserDTO userDTO = new CreateUserDTO(model.Name, model.Password);
+                    await _usersService.RegisterUserAsync(userDTO);
 
                     FormsAuthentication.SetAuthCookie(model.Name, true);
                     return RedirectToAction("Index", "Home");
