@@ -10,7 +10,7 @@ using System.Web;
 
 namespace Gallery.BLL
 {
-    public class ImageService
+    public class ImageService : IimageService
     {
         //
         // check for equality of pictures
@@ -19,7 +19,7 @@ namespace Gallery.BLL
         //        true - is equal
         //        false - isn't equal
         //
-        public static bool CompareBitmaps(Bitmap bmp1, Bitmap bmp2)
+        public bool CompareBitmapsAsync(Bitmap bmp1, Bitmap bmp2)
         {
             if (bmp1 == null || bmp2 == null)
                 return false;
@@ -55,11 +55,14 @@ namespace Gallery.BLL
             return result;
         }
 
-        public void UploadImage(HttpPostedFileBase File)
+
+        public async Task UploadImage(HttpPostedFileBase File)
         {
             //
             // Uploading image to server
             //
         }
+
+
     }
 }
