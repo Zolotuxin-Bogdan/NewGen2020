@@ -10,11 +10,19 @@ using System.Drawing.Imaging;
 using System.Configuration;
 using System.Web.Mvc;
 using Gallery.BLL;
+using System.Threading.Tasks;
 
 namespace Gallery.Controllers
 {
     public class HomeController : Controller
     {
+        private IimageService _imageService;
+        public HomeController(IimageService imageService)
+        {
+            _imageService = imageService ?? throw new ArgumentNullException(nameof(imageService));
+        }
+        public HomeController() : this(new ImageService()) { }
+
         public static string title;
         public static string manufacturer;
         public static string modelOfCamera;
@@ -170,8 +178,8 @@ namespace Gallery.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase files)
         {
-            try
-            {
+            /*try
+            {*/
                 if (files != null)
                 {
                     //if (!string.IsNullOrEmpty(User.Identity.Name))
@@ -230,9 +238,8 @@ namespace Gallery.Controllers
                                                 CheckBmp = new Bitmap(CheckFileStream);
                                                 CheckBmp = new Bitmap(CheckBmp, 64, 64);
 
-                                                CheckFileStream.Close();
-
-                                                if (ImageService.CompareBitmaps(TempBmp, CheckBmp))
+                                                CheckFileStream.Close();  
+                                                if (_imageService.CompareBitmapsAsync(TempBmp, CheckBmp))
                                                 {
                                                     IsLoad = false;
                                                     ViewBag.Error = "Photo already exists!";
@@ -297,14 +304,14 @@ namespace Gallery.Controllers
                 {
                     return View();
                 }
-            }
+            /*}
             catch (Exception err)
             {
 
                 //ViewBag.Error = "Unexpected error: " + err.Message;
                 //return View("Error");
 
-            }
+            }*/
             return RedirectToAction("Index");
         }
 
