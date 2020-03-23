@@ -26,5 +26,9 @@ namespace Gallery.BLL
             await _repo.RegisterUserToDatabase(dto.EMail, dto.Password);
         }
 
+        public int GetUserId(string userName)
+        {
+            return _repo.GetUserId(userName);
+        }
     }
 }

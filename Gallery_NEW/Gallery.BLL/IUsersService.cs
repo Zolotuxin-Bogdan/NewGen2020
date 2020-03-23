@@ -14,5 +14,7 @@ namespace Gallery.BLL
         Task<bool> IsUserExistAsync(string username, string password);
 
         Task RegisterUserAsync(CreateUserDTO dto);
+
+        int GetUserId(string userName);
     }
 }

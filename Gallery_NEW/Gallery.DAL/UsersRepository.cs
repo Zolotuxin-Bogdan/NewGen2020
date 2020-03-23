@@ -1,6 +1,7 @@
 ﻿using Gallery.DAL.Model;
 using System;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Gallery.DAL
@@ -23,6 +24,11 @@ namespace Gallery.DAL
         {
             _ctx.Users.Add(new User { EMail = username, Password = password });
             _ctx.SaveChanges();
+        }
+
+        public int GetUserId(string userName)
+        {
+            return _ctx.Users.Where(u => u.EMail == userName).Select(u => u.Id).FirstOrDefault();
         }
     }
 }
