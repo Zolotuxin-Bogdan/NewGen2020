@@ -21,9 +21,9 @@
     // Encrypted User's directory path
     //string DirPath = Server.MapPath(PathFromConfig) + "/" + HashService.ComputeSha256Hash(User.Identity.Name);
 
-    if (User.Identity.Name != null)
+    if (User.Identity.IsAuthenticated)
     {
-        string DirPath = Server.MapPath(PathFromConfig) + "/" + HashService.ComputeSha256Hash(User.Identity.Name);
+        string DirPath = Server.MapPath(PathFromConfig) + "/" + HashService.ComputeSha256Hash("Bogdan");
         if (!Directory.Exists(DirPath))
         {
             Directory.CreateDirectory(DirPath);

@@ -11,26 +11,22 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Gallery.PL.Interfaces;
+using Gallery.PL.Services;
 
 namespace Gallery.PL.Controllers
 {
     public class AccountController : Controller
     {
-        private IUsersService _usersService;
-        public AccountController(IUsersService usersService)
+        private readonly IUsersService _usersService;
+        private readonly IAuthenticationService _authenticationService;
+        public AccountController(IUsersService usersService, IAuthenticationService authenticationService)
         {
             _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
+            _authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
         }
 
-        public AccountController() : this(new UsersService(new UsersRepository(new UserContext()))) { }
-
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
+        public AccountController() : this(new UsersService(new UsersRepository(new UserContext())), new AuthenticationService()) { }
 
         public ActionResult Login()
         {
@@ -47,15 +43,11 @@ namespace Gallery.PL.Controllers
 
                 if (canAuthorize)
                 {
-                    ClaimsIdentity claim = new ClaimsIdentity("ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-                    claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, model.Name, ClaimValueTypes.String));
-                    claim.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", "OWIN Provider", ClaimValueTypes.String));
-                    AuthenticationManager.SignOut();
-                    AuthenticationManager.SignIn(new AuthenticationProperties
-                    {
-                        IsPersistent = true
-                    }, claim);
-                    //FormsAuthentication.SetAuthCookie(model.Name, true);
+                    var userId = _usersService.GetUserId(model.Name);
+                    var claim = _authenticationService.ClaimsСreation(userId.ToString());
+
+                    _authenticationService.AuthByOwinCookies(HttpContext.GetOwinContext(), claim);
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -84,16 +76,11 @@ namespace Gallery.PL.Controllers
                     CreateUserDTO userDTO = new CreateUserDTO(model.Name, model.Password);
                     await _usersService.RegisterUserAsync(userDTO);
 
-                    ClaimsIdentity claim = new ClaimsIdentity("ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-                    claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, model.Name, ClaimValueTypes.String));
-                    claim.AddClaim(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", "OWIN Provider", ClaimValueTypes.String));
-                    AuthenticationManager.SignOut();
-                    AuthenticationManager.SignIn(new AuthenticationProperties
-                    {
-                        IsPersistent = true
-                    }, claim);
-                    return RedirectToAction("Index", "Home");
+                    var userId = _usersService.GetUserId(model.Name);
+                    var claim = _authenticationService.ClaimsСreation(userId.ToString());
+                    _authenticationService.AuthByOwinCookies(HttpContext.GetOwinContext(), claim);
 
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -105,7 +92,7 @@ namespace Gallery.PL.Controllers
 
         public ActionResult Logout()
         {
-            AuthenticationManager.SignOut();
+            _authenticationService.LogOut(HttpContext.GetOwinContext());
             return RedirectToAction("Index", "Home");
         }
 
