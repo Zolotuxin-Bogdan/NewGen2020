@@ -12,5 +12,7 @@ namespace Gallery.PL.Interfaces
         void AuthByOwinCookies(IOwinContext owinCtx, ClaimsIdentity claim);
 
         ClaimsIdentity ClaimsСreation(string claims);
+
+        void LogOut(IOwinContext owinCtx);
     }
 }
