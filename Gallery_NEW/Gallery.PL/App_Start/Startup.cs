@@ -20,7 +20,7 @@ namespace Gallery.PL.App_Start
                 ExpireTimeSpan = TimeSpan.FromMinutes(60)
             });
 
-            
+            DIConfig.Configure(new HttpConfiguration());
         }
     }
 }
