@@ -21,7 +21,6 @@ namespace Gallery.Controllers
         {
             _imageService = imageService ?? throw new ArgumentNullException(nameof(imageService));
         }
-        public HomeController() : this(new ImageService()) { }
 
         public static string title;
         public static string manufacturer;

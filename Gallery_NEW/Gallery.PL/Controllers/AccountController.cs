@@ -26,8 +26,6 @@ namespace Gallery.PL.Controllers
             _authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));
         }
 
-        public AccountController() : this(new UsersService(new UsersRepository(new UserContext())), new AuthenticationService()) { }
-
         public ActionResult Login()
         {
             return View();
