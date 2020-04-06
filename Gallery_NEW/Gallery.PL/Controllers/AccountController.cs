@@ -1,18 +1,11 @@
 ﻿using Gallery.BLL;
 using Gallery.BLL.Contracts;
-using Gallery.DAL;
-using Gallery.DAL.Model;
-using Microsoft.Owin.Security;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 using Gallery.PL.Interfaces;
-using Gallery.PL.Services;
+using Gallery.PL.Model;
 
 namespace Gallery.PL.Controllers
 {

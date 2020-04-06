@@ -67,7 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IRepository.cs" />
-    <Compile Include="Model\Models.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
