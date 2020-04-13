@@ -7,7 +7,7 @@ using NLog;
 
 namespace Gallery.PL.Filters
 {
-    public class LogFilterAttribute : ActionFilterAttribute
+    public class LogFilterAttribute : ActionFilterAttribute, IExceptionFilter
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
@@ -44,6 +44,20 @@ namespace Gallery.PL.Filters
                                      "\nStatus: " + status + "\n>>>\n";
             Logger.Info(messageResponse);
             base.OnActionExecuted(filterContext);
+        }
+
+        public void OnException(ExceptionContext filterContext)
+        {
+            if (!filterContext.ExceptionHandled)
+            {
+                filterContext.ExceptionHandled = true;
+            }
+
+            var exception = filterContext.Exception;
+
+            string messageException = "\n<<<\n[Exception]" +
+                                     "\nException: \n" + exception + "\n>>>\n";
+            Logger.Error(messageException);
         }
     }
 }
