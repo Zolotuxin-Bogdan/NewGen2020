@@ -30,5 +30,10 @@ namespace Gallery.BLL
         {
             return _repo.GetUserId(userName);
         }
+
+        public string GetUserName(int id)
+        {
+            return _repo.GetUserName(id);
+        }
     }
 }

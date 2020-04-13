@@ -30,5 +30,10 @@ namespace Gallery.DAL
         {
             return _ctx.Users.Where(u => u.EMail == userName).Select(u => u.Id).FirstOrDefault();
         }
+
+        public string GetUserName(int id)
+        {
+            return _ctx.Users.Where(u => u.Id == id).Select(u => u.EMail).FirstOrDefault();
+        }
     }
 }

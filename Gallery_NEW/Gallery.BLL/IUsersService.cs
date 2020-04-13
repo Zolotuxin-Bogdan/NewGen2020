@@ -16,5 +16,7 @@ namespace Gallery.BLL
         Task RegisterUserAsync(CreateUserDTO dto);
 
         int GetUserId(string userName);
+
+        string GetUserName(int id);
     }
 }
