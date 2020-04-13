@@ -30,7 +30,7 @@ namespace Gallery.PL.Services
         public ClaimsIdentity ClaimsСreation(string claims)
         {
             ClaimsIdentity claim = new ClaimsIdentity("ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            claim.AddClaim(new Claim(ClaimTypes.NameIdentifier, claims, ClaimValueTypes.String));
+            claim.AddClaim(new Claim(ClaimsIdentity.DefaultNameClaimType, claims, ClaimValueTypes.String));
             return claim;
         }
 
