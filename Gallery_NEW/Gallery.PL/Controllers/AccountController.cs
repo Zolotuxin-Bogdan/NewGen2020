@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Gallery.PL.Filters;
 using Gallery.PL.Interfaces;
 using Gallery.PL.Model;
 
@@ -24,6 +25,7 @@ namespace Gallery.PL.Controllers
             return View();
         }
 
+        [LogFilter]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel model)
@@ -54,6 +56,7 @@ namespace Gallery.PL.Controllers
             return View();
         }
 
+        [LogFilter]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterModel model)
@@ -81,6 +84,7 @@ namespace Gallery.PL.Controllers
             return View(model);
         }
 
+        [LogFilter]
         public ActionResult Logout()
         {
             _authenticationService.LogOut(HttpContext.GetOwinContext());
