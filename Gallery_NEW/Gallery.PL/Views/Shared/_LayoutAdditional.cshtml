@@ -6,7 +6,7 @@
 }
 @if (User.Identity.IsAuthenticated)
 {
-    <li>@Html.ActionLink(_usersService.GetUserId("Zolottse").ToString(), "Index")</li>
+    <li>@Html.ActionLink(_usersService.GetUserName(Convert.ToInt32(User.Identity.Name)), "Index")</li>
     <li>@Html.ActionLink("Sign Out", "Logout", "Account")</li>
 }
 else
