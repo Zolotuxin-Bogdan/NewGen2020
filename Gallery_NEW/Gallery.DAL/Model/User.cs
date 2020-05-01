@@ -14,9 +14,11 @@ namespace Gallery.DAL
         public string Password { get; set; }
 
         public ICollection<Role> Roles { get; set; }
+        public ICollection<Media> Medias { get; set; }
         public User()
         {
             Roles = new List<Role>();
+            Medias = new List<Media>();
         }
     }
 }
