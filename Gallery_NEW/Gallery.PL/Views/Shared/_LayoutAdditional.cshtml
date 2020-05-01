@@ -1,12 +1,10 @@
 ﻿@using Gallery.BLL
 @using Gallery.DAL
 @using Gallery.DAL.Model
-@{
-    IUsersService _usersService = new UsersService(new UsersRepository(new UserContext()));
-}
+
 @if (User.Identity.IsAuthenticated)
 {
-    <li>@Html.ActionLink(_usersService.GetUserName(Convert.ToInt32(User.Identity.Name)), "Index")</li>
+    <li>@Html.ActionLink("UserName", "Index")</li>
     <li>@Html.ActionLink("Sign Out", "Logout", "Account")</li>
 }
 else
