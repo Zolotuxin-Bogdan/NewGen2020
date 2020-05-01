@@ -13,13 +13,16 @@ namespace Gallery.DAL.Model
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<User> Media { get; set; }
+        public DbSet<Role> MediaType { get; set; }
+
     }
 
     public class UserDbInitializer : DropCreateDatabaseAlways<UserContext>
     {
         protected override void Seed(UserContext ctx)
         {
-            User adminUser = new User { Id = 1, EMail = "admin@admin.admin", Password = "admin" };
+            User adminUser = new User { Id = 1, Email = "admin@admin.admin", Password = "admin" };
 
             ctx.Users.AddRange(new List<User> { adminUser });
             ctx.SaveChanges();
