@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
@@ -25,7 +26,9 @@ namespace Gallery.PL.App_Start
             // the class in Global.asax.)
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
-            builder.RegisterType<UserContext>()
+            var connectionString = ConfigurationManager.ConnectionStrings["sql"].ConnectionString ?? throw new ArgumentException("sql");
+
+            builder.Register(ctx => new UserContext(connectionString))
                 .AsSelf();
 
             builder.RegisterType<UsersRepository>()
