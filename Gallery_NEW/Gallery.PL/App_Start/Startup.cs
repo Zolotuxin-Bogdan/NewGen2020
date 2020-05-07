@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Web.Http;
 using Gallery.DAL.Model;
 using Microsoft.Owin;
@@ -23,8 +22,6 @@ namespace Gallery.PL.App_Start
             });
 
             DIConfig.Configure(new HttpConfiguration());
-
-            Database.SetInitializer(new UserDbInitializer());
         }
     }
 }
