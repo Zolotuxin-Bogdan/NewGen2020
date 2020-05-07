@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity;
 
 namespace Gallery.DAL.Model
 {
@@ -17,7 +11,40 @@ namespace Gallery.DAL.Model
         public DbSet<Media> Media { get; set; }
         public DbSet<MediaType> MediaType { get; set; }
 
-        
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            // Add Tables to Fluent API
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Role>().ToTable("Roles");
+            modelBuilder.Entity<Media>().ToTable("Media");
+            modelBuilder.Entity<MediaType>().ToTable("MediaTypes");
+
+            // Add Primary Keys to Fluent API
+            modelBuilder.Entity<User>().HasKey(p => p.Id);
+            modelBuilder.Entity<Role>().HasKey(p => p.Id);
+            modelBuilder.Entity<Media>().HasKey(p => p.Id);
+            modelBuilder.Entity<MediaType>().HasKey(p => p.Id);
+
+            // Add Property to Fluent API
+            modelBuilder.Entity<User>().Property(p => p.Id).IsRequired();
+            modelBuilder.Entity<User>().Property(p => p.Email).IsRequired();
+            modelBuilder.Entity<User>().Property(p => p.Password).IsRequired();
+
+            // Add Relations to Fluent API
+            modelBuilder.Entity<User>()
+                .HasMany(p => p.Roles)
+                .WithMany(d => d.Users);
+
+            modelBuilder.Entity<User>()
+                .HasMany(p => p.Media)
+                .WithRequired(d => d.User);
+
+            modelBuilder.Entity<MediaType>()
+                .HasMany(p => p.Media)
+                .WithRequired(d => d.Type);
+
+            base.OnModelCreating(modelBuilder);
+        }
 
     }
 
