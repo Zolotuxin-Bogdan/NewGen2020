@@ -12,7 +12,7 @@ namespace Gallery.DAL.Model
         public string Type { get; set; }
 
 
-        public ICollection<Media> Medias { get; set; } = 
+        public ICollection<Media> Media { get; set; } = 
             new List<Media>();
 
     }

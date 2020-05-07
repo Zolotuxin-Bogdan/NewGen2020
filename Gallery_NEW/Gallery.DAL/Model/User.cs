@@ -15,7 +15,7 @@ namespace Gallery.DAL
 
         public ICollection<Role> Roles { get; set; } =
             new List<Role>();
-        public ICollection<Media> Medias { get; set; } = 
+        public ICollection<Media> Media { get; set; } = 
             new List<Media>();
 
     }
