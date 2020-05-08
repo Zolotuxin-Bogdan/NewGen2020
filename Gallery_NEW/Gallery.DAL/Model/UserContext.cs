@@ -4,6 +4,7 @@ namespace Gallery.DAL.Model
 {
     public class UserContext : DbContext
     {
+        public UserContext() {}
         public UserContext(string connectionString) : base(connectionString) { }
 
         public DbSet<User> Users { get; set; }

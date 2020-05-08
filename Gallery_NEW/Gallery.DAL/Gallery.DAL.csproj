@@ -67,6 +67,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IRepository.cs" />
+    <Compile Include="Migrations\202005011439501_InitialCreate.cs" />
+    <Compile Include="Migrations\202005011439501_InitialCreate.designer.cs">
+      <DependentUpon>202005011439501_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202005081358142_FirstMigration.cs" />
+    <Compile Include="Migrations\202005081358142_FirstMigration.designer.cs">
+      <DependentUpon>202005081358142_FirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Media.cs" />
     <Compile Include="Model\MediaType.cs" />
     <Compile Include="Model\Role.cs" />
@@ -91,7 +100,14 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202005011439501_InitialCreate.resx">
+      <DependentUpon>202005011439501_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005081358142_FirstMigration.resx">
+      <DependentUpon>202005081358142_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
