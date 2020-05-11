@@ -20,12 +20,14 @@ namespace Gallery.DAL.Model
             modelBuilder.Entity<Role>().ToTable("Roles");
             modelBuilder.Entity<Media>().ToTable("Media");
             modelBuilder.Entity<MediaType>().ToTable("MediaTypes");
+            modelBuilder.Entity<Attempt>().ToTable("Attempts");
 
             // Add Primary Keys to Fluent API
             modelBuilder.Entity<User>().HasKey(p => p.Id);
             modelBuilder.Entity<Role>().HasKey(p => p.Id);
             modelBuilder.Entity<Media>().HasKey(p => p.Id);
             modelBuilder.Entity<MediaType>().HasKey(p => p.Id);
+            modelBuilder.Entity<Attempt>().HasKey(p => p.Id);
 
             // Add Property to Fluent API
             modelBuilder.Entity<User>().Property(p => p.Id).IsRequired();
@@ -44,6 +46,10 @@ namespace Gallery.DAL.Model
             modelBuilder.Entity<MediaType>()
                 .HasMany(p => p.Media)
                 .WithRequired(d => d.Type);
+
+            modelBuilder.Entity<User>()
+                .HasMany(p => p.Attempts)
+                .WithRequired(d => d.User);
 
             base.OnModelCreating(modelBuilder);
         }
