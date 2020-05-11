@@ -76,6 +76,7 @@
       <DependentUpon>202005081358142_FirstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\Attempt.cs" />
     <Compile Include="Model\Media.cs" />
     <Compile Include="Model\MediaType.cs" />
     <Compile Include="Model\Role.cs" />
