@@ -28,7 +28,7 @@ namespace Gallery.PL.App_Start
 
             var connectionString = ConfigurationManager.ConnectionStrings["sql"].ConnectionString ?? throw new ArgumentException("sql");
 
-            builder.Register(ctx => new UserContext(connectionString))
+            builder.Register(ctx => new GalleryContext(connectionString))
                 .AsSelf();
 
             builder.RegisterType<UsersRepository>()

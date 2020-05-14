@@ -5,16 +5,16 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Gallery.DAL.Model.UserContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Gallery.DAL.Model.GalleryContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
             MigrationsDirectory = @"Migrations";
-            ContextKey = "Gallery.DAL.Model.UserContext";
+            ContextKey = "Gallery.DAL.Model.GalleryContext";
         }
 
-        protected override void Seed(Gallery.DAL.Model.UserContext context)
+        protected override void Seed(Gallery.DAL.Model.GalleryContext context)
         {
             //  This method will be called after migrating to the latest version.
 
