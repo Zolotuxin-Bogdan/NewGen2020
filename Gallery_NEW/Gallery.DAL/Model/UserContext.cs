@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using Gallery.DAL.Model.Configuration;
 
 namespace Gallery.DAL.Model
 {
@@ -15,41 +16,14 @@ namespace Gallery.DAL.Model
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            // Add Tables to Fluent API
-            modelBuilder.Entity<User>().ToTable("Users");
-            modelBuilder.Entity<Role>().ToTable("Roles");
-            modelBuilder.Entity<Media>().ToTable("Media");
-            modelBuilder.Entity<MediaType>().ToTable("MediaTypes");
-            modelBuilder.Entity<Attempt>().ToTable("Attempts");
 
-            // Add Primary Keys to Fluent API
-            modelBuilder.Entity<User>().HasKey(p => p.Id);
-            modelBuilder.Entity<Role>().HasKey(p => p.Id);
-            modelBuilder.Entity<Media>().HasKey(p => p.Id);
-            modelBuilder.Entity<MediaType>().HasKey(p => p.Id);
-            modelBuilder.Entity<Attempt>().HasKey(p => p.Id);
+            modelBuilder.HasDefaultSchema("Gallery");
 
-            // Add Property to Fluent API
-            modelBuilder.Entity<User>().Property(p => p.Id).IsRequired();
-            modelBuilder.Entity<User>().Property(p => p.Email).IsRequired();
-            modelBuilder.Entity<User>().Property(p => p.Password).IsRequired();
-
-            // Add Relations to Fluent API
-            modelBuilder.Entity<User>()
-                .HasMany(p => p.Roles)
-                .WithMany(d => d.Users);
-
-            modelBuilder.Entity<User>()
-                .HasMany(p => p.Media)
-                .WithRequired(d => d.User);
-
-            modelBuilder.Entity<MediaType>()
-                .HasMany(p => p.Media)
-                .WithRequired(d => d.Type);
-
-            modelBuilder.Entity<User>()
-                .HasMany(p => p.Attempts)
-                .WithRequired(d => d.User);
+            modelBuilder.Configurations.Add(new UserConfiguration());
+            modelBuilder.Configurations.Add(new RoleConfiguration());
+            modelBuilder.Configurations.Add(new MediaConfiguration());
+            modelBuilder.Configurations.Add(new MediaTypeConfiguration());
+            modelBuilder.Configurations.Add(new AttemptLoginConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
