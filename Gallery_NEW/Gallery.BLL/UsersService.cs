@@ -16,6 +16,10 @@ namespace Gallery.BLL
         {
             return await _repo.IsUserExistAsync(username, password);
         }
+        public async Task<bool> IsUserExistAsync(string username)
+        {
+            return await _repo.IsUserExistAsync(username);
+        }
         public Task<UserDTO> FindUserAsync(string username, string password)
         {
             throw new NotImplementedException();

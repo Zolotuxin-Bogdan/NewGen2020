@@ -10,6 +10,8 @@ namespace Gallery.DAL
     {
         Task<bool> IsUserExistAsync(string username, string password);
 
+        Task<bool> IsUserExistAsync(string username);
+
         Task RegisterUserToDatabaseAsync(string username, string password);
 
         int GetUserId(string userName);
