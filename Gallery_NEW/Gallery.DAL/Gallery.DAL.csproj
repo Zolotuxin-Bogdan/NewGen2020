@@ -80,7 +80,7 @@
       <DependentUpon>202005141517330_Added_AttemptTable_Migration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Model\Attempt.cs" />
+    <Compile Include="Model\LoginAttempt.cs" />
     <Compile Include="Model\Configuration\AttemptLoginConfiguration.cs" />
     <Compile Include="Model\Configuration\MediaConfiguration.cs" />
     <Compile Include="Model\Configuration\MediaTypeConfiguration.cs" />

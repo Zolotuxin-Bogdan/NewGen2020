@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gallery.DAL.Model
 {
-    public class Attempt
+    public class LoginAttempt
     {
         public int Id { get; set; }
         public string IpAddress { get; set; }

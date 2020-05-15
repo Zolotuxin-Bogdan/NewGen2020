@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Gallery.DAL.Model.Configuration
 {
-    public class AttemptLoginConfiguration : EntityTypeConfiguration<Attempt>
+    public class AttemptLoginConfiguration : EntityTypeConfiguration<LoginAttempt>
     {
         public AttemptLoginConfiguration()
         {

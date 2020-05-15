@@ -17,8 +17,8 @@ namespace Gallery.DAL
             new List<Role>();
         public ICollection<Media> Media { get; set; } = 
             new List<Media>();
-        public ICollection<Attempt> Attempts { get; set; } =
-            new List<Attempt>();
+        public ICollection<LoginAttempt> Attempts { get; set; } =
+            new List<LoginAttempt>();
 
     }
 }

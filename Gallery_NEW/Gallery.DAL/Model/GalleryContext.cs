@@ -12,7 +12,7 @@ namespace Gallery.DAL.Model
         public DbSet<Role> Roles { get; set; }
         public DbSet<Media> Media { get; set; }
         public DbSet<MediaType> MediaType { get; set; }
-        public DbSet<Attempt> Attempts { get; set; }
+        public DbSet<LoginAttempt> Attempts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
