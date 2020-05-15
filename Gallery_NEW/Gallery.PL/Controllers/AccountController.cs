@@ -79,6 +79,11 @@ namespace Gallery.PL.Controllers
                     var claim = _authenticationService.ClaimsСreation(userId.ToString());
                     _authenticationService.AuthByOwinCookies(HttpContext.GetOwinContext(), claim);
 
+                    var ipAddress = HttpContext.GetOwinContext().Request.RemoteIpAddress;
+                    LoginAttemptDTO loginDTO = new LoginAttemptDTO(model.Email, ipAddress, true);
+
+                    await _usersService.RegisterLoginAttemptToDatabaseAsync(loginDTO);
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
