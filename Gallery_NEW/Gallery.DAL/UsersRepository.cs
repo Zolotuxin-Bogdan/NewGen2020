@@ -20,10 +20,10 @@ namespace Gallery.DAL
                                              u.Password == password.Trim());
         }
 
-        public async Task RegisterUserToDatabase(string username, string password)
+        public async Task RegisterUserToDatabaseAsync(string username, string password)
         {
             _ctx.Users.Add(new User { Email = username, Password = password });
-            _ctx.SaveChanges();
+            await _ctx.SaveChangesAsync();
         }
 
         public int GetUserId(string userName)
@@ -34,6 +34,28 @@ namespace Gallery.DAL
         public string GetUserName(int id)
         {
             return _ctx.Users.Where(u => u.Id == id).Select(u => u.Email).FirstOrDefault();
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            return await _ctx.Users.Where(u => u.Id == id).Select(u => u).FirstOrDefaultAsync();
+        }
+
+        public async Task RegisterLoginAttemptToDatabaseAsync(string email, string ipAddress, bool isSuccess)
+        {
+            var userId = GetUserId(email);
+            var user = GetUserByIdAsync(userId);
+            if (user == null) throw new ArgumentNullException(nameof(user));
+
+            _ctx.Attempts.Add(new LoginAttempt()
+            {
+                User = await user,
+                IpAddress = ipAddress,
+                IsSuccess = isSuccess,
+                TimeStamp = DateTime.Now
+            });
+
+            await _ctx.SaveChangesAsync();
         }
     }
 }

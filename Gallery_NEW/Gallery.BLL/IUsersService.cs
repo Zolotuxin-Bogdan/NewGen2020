@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Gallery.DAL;
 
 namespace Gallery.BLL
 {
@@ -18,5 +19,9 @@ namespace Gallery.BLL
         int GetUserId(string userName);
 
         string GetUserName(int id);
+
+        Task<User> GetUserByIdAsync(int id);
+
+        Task RegisterLoginAttemptToDatabaseAsync(LoginAttemptDTO dto);
     }
 }

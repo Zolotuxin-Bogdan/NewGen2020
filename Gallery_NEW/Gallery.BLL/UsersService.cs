@@ -23,7 +23,7 @@ namespace Gallery.BLL
 
         public async Task RegisterUserAsync(CreateUserDTO dto)
         {
-            await _repo.RegisterUserToDatabase(dto.EMail, dto.Password);
+            await _repo.RegisterUserToDatabaseAsync(dto.EMail, dto.Password);
         }
 
         public int GetUserId(string userName)
@@ -34,6 +34,16 @@ namespace Gallery.BLL
         public string GetUserName(int id)
         {
             return _repo.GetUserName(id);
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        { 
+           return await _repo.GetUserByIdAsync(id);
+        }
+
+        public async Task RegisterLoginAttemptToDatabaseAsync(LoginAttemptDTO dto)
+        {
+            await _repo.RegisterLoginAttemptToDatabaseAsync(dto.Email, dto.IpAddress, dto.IsSuccess);
         }
     }
 }
