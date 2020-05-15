@@ -33,6 +33,11 @@ namespace Gallery.PL.Controllers
             if (ModelState.IsValid)
             {
                 var canAuthorize = await _usersService.IsUserExistAsync(model.Name, model.Password);
+                var ipAddress = HttpContext.GetOwinContext().Request.RemoteIpAddress;
+
+                LoginAttemptDTO loginDTO = new LoginAttemptDTO(model.Name, ipAddress, canAuthorize);
+
+                await _usersService.RegisterLoginAttemptToDatabaseAsync(loginDTO);
 
                 if (canAuthorize)
                 {
