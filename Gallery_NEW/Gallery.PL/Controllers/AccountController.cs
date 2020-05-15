@@ -32,16 +32,16 @@ namespace Gallery.PL.Controllers
         {
             if (ModelState.IsValid)
             {
-                var canAuthorize = await _usersService.IsUserExistAsync(model.Name, model.Password);
+                var canAuthorize = await _usersService.IsUserExistAsync(model.Email, model.Password);
                 var ipAddress = HttpContext.GetOwinContext().Request.RemoteIpAddress;
 
-                LoginAttemptDTO loginDTO = new LoginAttemptDTO(model.Name, ipAddress, canAuthorize);
+                LoginAttemptDTO loginDTO = new LoginAttemptDTO(model.Email, ipAddress, canAuthorize);
 
                 await _usersService.RegisterLoginAttemptToDatabaseAsync(loginDTO);
 
                 if (canAuthorize)
                 {
-                    var userId = _usersService.GetUserId(model.Name);
+                    var userId = _usersService.GetUserId(model.Email);
                     var claim = _authenticationService.ClaimsСreation(userId.ToString());
 
                     _authenticationService.AuthByOwinCookies(HttpContext.GetOwinContext(), claim);
@@ -68,14 +68,14 @@ namespace Gallery.PL.Controllers
         {
             if (ModelState.IsValid)
             {
-                var isUserExist = await _usersService.IsUserExistAsync(model.Name, model.Password);
+                var isUserExist = await _usersService.IsUserExistAsync(model.Email);
 
                 if (isUserExist == false)
                 {
-                    CreateUserDTO userDTO = new CreateUserDTO(model.Name, model.Password);
+                    CreateUserDTO userDTO = new CreateUserDTO(model.Email, model.Password);
                     await _usersService.RegisterUserAsync(userDTO);
 
-                    var userId = _usersService.GetUserId(model.Name);
+                    var userId = _usersService.GetUserId(model.Email);
                     var claim = _authenticationService.ClaimsСreation(userId.ToString());
                     _authenticationService.AuthByOwinCookies(HttpContext.GetOwinContext(), claim);
 
