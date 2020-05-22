@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileStorageProvider
+namespace FileStorageProvider.Interfaces
 {
-    public class Class1
+    interface IMediaStorageProvider
     {
+
     }
 }
