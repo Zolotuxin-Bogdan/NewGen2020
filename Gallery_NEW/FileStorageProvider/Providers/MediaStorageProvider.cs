@@ -57,7 +57,7 @@ namespace FileStorageProvider.Providers
             }
 
             File.Delete(path);
-            return File.Exists(path);
+            return !File.Exists(path);
         }
 
 
