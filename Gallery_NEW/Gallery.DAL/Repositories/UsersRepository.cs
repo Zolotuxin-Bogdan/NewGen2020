@@ -1,10 +1,11 @@
-﻿using Gallery.DAL.Model;
-using System;
+﻿using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Gallery.DAL.Model;
+using Gallery.DAL.Repositories.Interfaces;
 
-namespace Gallery.DAL
+namespace Gallery.DAL.Repositories
 {
     public class UsersRepository : IRepository
     {
