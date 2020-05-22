@@ -2,6 +2,7 @@
 using Gallery.DAL;
 using System;
 using System.Threading.Tasks;
+using Gallery.DAL.Repositories.Interfaces;
 
 namespace Gallery.BLL
 {
