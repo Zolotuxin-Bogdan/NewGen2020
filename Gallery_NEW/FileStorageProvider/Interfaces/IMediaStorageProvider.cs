@@ -8,6 +8,8 @@ namespace FileStorageProvider.Interfaces
 {
     interface IMediaStorageProvider
     {
-
+        bool Upload(byte[] dataBytes, string path);
+        byte[] Read(string path);
+        bool Delete(string path);
     }
 }

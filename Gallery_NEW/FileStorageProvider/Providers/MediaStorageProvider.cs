@@ -9,6 +9,19 @@ namespace FileStorageProvider.Providers
 {
     public class MediaStorageProvider : IMediaStorageProvider
     {
+        public bool Delete(string path)
+        {
+            throw new NotImplementedException();
+        }
 
+        public byte[] Read(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Upload(byte[] dataBytes, string path)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
