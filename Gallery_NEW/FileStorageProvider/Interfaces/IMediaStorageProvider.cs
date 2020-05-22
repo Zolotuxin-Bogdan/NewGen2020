@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FileStorageProvider.Interfaces
 {
-    interface IMediaStorageProvider
+    public interface IMediaStorageProvider
     {
         bool Upload(byte[] dataBytes, string path);
         byte[] Read(string path);

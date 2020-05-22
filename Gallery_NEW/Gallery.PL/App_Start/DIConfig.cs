@@ -8,10 +8,12 @@ using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
+using FileStorageProvider;
 using Gallery.BLL;
 using Gallery.DAL;
 using Gallery.DAL.Model;
 using Gallery.PL.Interfaces;
+using Gallery.PL.Manager;
 using Gallery.PL.Services;
 
 namespace Gallery.PL.App_Start
@@ -42,6 +44,12 @@ namespace Gallery.PL.App_Start
 
             builder.RegisterType<ImageService>()
                 .As<IimageService>();
+
+            //builder.RegisterType<GalleryConfig>()
+            //  .AsSelf();
+
+            builder.RegisterType<MediaStorageProvider>()
+                .As<IMediaStorageProvider>();
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
