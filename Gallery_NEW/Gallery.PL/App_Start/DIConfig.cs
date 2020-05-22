@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Web;
-using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
 using Autofac.Integration.Mvc;
-using FileStorageProvider;
+using FileStorageProvider.Providers;
+using FileStorageProvider.Interfaces;
 using Gallery.BLL;
-using Gallery.DAL;
 using Gallery.DAL.Model;
+using Gallery.DAL.Repositories;
+using Gallery.DAL.Repositories.Interfaces;
 using Gallery.PL.Interfaces;
-using Gallery.PL.Manager;
 using Gallery.PL.Services;
 
 namespace Gallery.PL.App_Start
