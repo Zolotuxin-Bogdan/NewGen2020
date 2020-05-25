@@ -1,12 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Gallery.DAL.Model;
+using Gallery.DAL.Repositories.Interfaces;
 
 namespace Gallery.DAL.Repositories
 {
-    class MediaRepository
+    class MediaRepository : IMediaRepository
     {
+        private readonly GalleryContext _ctx;
+
+        public MediaRepository(GalleryContext ctx)
+        {
+            _ctx = ctx ?? throw new ArgumentNullException(nameof(ctx));
+        }
+
+        // Media
+        public async Task RegisterMediaToDataBaseAsync(Media media)
+        {
+            _ctx.Media.Add(media);
+            await _ctx.SaveChangesAsync();
+        }
+
+        public async Task ChangeDeleteStatusAsync(string name, bool status)
+        {
+            var media = await _ctx.Media.FirstOrDefaultAsync(p => p.Name == name);
+            if (media != null)
+            {
+                media.IsDeleted = status;
+            }
+            await _ctx.SaveChangesAsync();
+        }
+
+        public async Task<Media> GetMediaByNameAsync(string name)
+        {
+            return await _ctx.Media.FirstOrDefaultAsync(p => p.Name == name);
+        }
+
+        public async Task<bool> IsMediaExistAsync(string name)
+        {
+            return await _ctx.Media.AnyAsync(p => p.Name == name);
+        }
+
+        // MediaType
+        public async Task RegisterMediaTypeToDataBaseAsync(MediaType type)
+        {
+            _ctx.MediaType.Add(type);
+            await _ctx.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsMediaTypeExistAsync(string type)
+        {
+            return await _ctx.MediaType.AnyAsync(p => p.Type == type);
+        }
+
+
     }
 }
