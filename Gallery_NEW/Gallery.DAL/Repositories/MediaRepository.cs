@@ -9,7 +9,7 @@ using Gallery.DAL.Repositories.Interfaces;
 
 namespace Gallery.DAL.Repositories
 {
-    class MediaRepository : IMediaRepository
+    public class MediaRepository : IMediaRepository
     {
         private readonly GalleryContext _ctx;
 

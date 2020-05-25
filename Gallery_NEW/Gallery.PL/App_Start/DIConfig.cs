@@ -48,6 +48,9 @@ namespace Gallery.PL.App_Start
             builder.RegisterType<MediaStorageProvider>()
                 .As<IMediaStorageProvider>();
 
+            builder.RegisterType<MediaRepository>()
+                .As<IMediaRepository>();
+
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
