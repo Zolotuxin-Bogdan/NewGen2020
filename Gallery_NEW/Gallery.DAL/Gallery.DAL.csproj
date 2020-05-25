@@ -66,6 +66,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\202005251218405_Added_IsDeleted_Property_To_Media.cs" />
+    <Compile Include="Migrations\202005251218405_Added_IsDeleted_Property_To_Media.designer.cs">
+      <DependentUpon>202005251218405_Added_IsDeleted_Property_To_Media.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repositories\Interfaces\IMediaRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRepository.cs" />
     <Compile Include="Migrations\202005011439501_InitialCreate.cs" />
@@ -121,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202005141517330_Added_AttemptTable_Migration.resx">
       <DependentUpon>202005141517330_Added_AttemptTable_Migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005251218405_Added_IsDeleted_Property_To_Media.resx">
+      <DependentUpon>202005251218405_Added_IsDeleted_Property_To_Media.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
