@@ -51,6 +51,9 @@ namespace Gallery.PL.App_Start
             builder.RegisterType<MediaRepository>()
                 .As<IMediaRepository>();
 
+            builder.RegisterType<HashService>()
+                .As<IHashService>();
+
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
