@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using Gallery.BLL;
 using System.Threading.Tasks;
 using Gallery.PL.Filters;
+using Gallery.PL.Interfaces;
 using Gallery.PL.Manager;
 
 namespace Gallery.Controllers
@@ -20,10 +21,12 @@ namespace Gallery.Controllers
     {
         private IimageService _imageService;
         private IHashService _hashService;
-        public HomeController(IimageService imageService, IHashService hashService)
+        private IPublisher _publisher;
+        public HomeController(IimageService imageService, IHashService hashService, IPublisher publisher)
         {
             _imageService = imageService ?? throw new ArgumentNullException(nameof(imageService));
             _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
+            _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
         }
 
         [Authorize]
