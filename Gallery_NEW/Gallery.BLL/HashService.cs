@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Gallery.BLL
 {
-    public class HashService
+    public class HashService : IHashService
     {
         //
         // Hash-Function
         // Input: String
         // Otput: String with ShaHash
         //
-        public static string ComputeSha256Hash(string rawData)
+        public string ComputeSha256Hash(string rawData)
         {
             // Create a SHA256   
             using (SHA256 sha256Hash = SHA256.Create())
