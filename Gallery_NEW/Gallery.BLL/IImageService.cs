@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Gallery.BLL
 {
@@ -12,6 +11,6 @@ namespace Gallery.BLL
     {
        bool CompareBitmapsAsync(Bitmap bmp1, Bitmap bmp2);
 
-       Task UploadImage(HttpPostedFileBase File);
+       Task<bool> UploadImageAsync(byte[] data, string path, int userId);
     }
 }
