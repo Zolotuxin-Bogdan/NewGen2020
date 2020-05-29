@@ -52,6 +52,11 @@ namespace Gallery.DAL.Repositories
             await _ctx.SaveChangesAsync();
         }
 
+        public async Task<MediaType> GetMediaTypeByTypeAsync(string type)
+        {
+            return await _ctx.MediaType.FirstOrDefaultAsync(p => p.Type == type);
+        }
+
         public async Task<bool> IsMediaTypeExistAsync(string type)
         {
             return await _ctx.MediaType.AnyAsync(p => p.Type == type);

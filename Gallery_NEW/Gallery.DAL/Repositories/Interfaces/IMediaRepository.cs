@@ -17,6 +17,7 @@ namespace Gallery.DAL.Repositories.Interfaces
 
         // MediaType
         Task RegisterMediaTypeToDataBaseAsync(MediaType type);
+        Task<MediaType> GetMediaTypeByTypeAsync(string type);
         Task<bool> IsMediaTypeExistAsync(string type);
 
     }
