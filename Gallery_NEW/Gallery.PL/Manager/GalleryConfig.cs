@@ -7,6 +7,7 @@ namespace Gallery.PL.Manager
     {
         public static string key_pathForSave { get; } = "PathForSave";
         public static string key_imageTypes { get; } = "SupportedPhotoFormat";
+        public static string key_messageQueuePath { get; } = "MessageQueuePath";
 
         private const string default_pathForSave = "/Images/Upload/";
         private const string default_imageTypes = "image/jpeg; image/png";
@@ -37,6 +38,12 @@ namespace Gallery.PL.Manager
         {
             var connectionString = ConfigurationManager.ConnectionStrings["sql"] ?? throw new ArgumentException("SQL");
             return connectionString.ConnectionString;
+        }
+
+        public static string GetMessageQueuePath()
+        {
+            var appSettings = ConfigurationManager.AppSettings;
+            return appSettings[key_messageQueuePath] ?? throw new ArgumentNullException(nameof(appSettings));
         }
     }
 }
