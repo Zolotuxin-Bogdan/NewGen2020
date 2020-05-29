@@ -9,5 +9,6 @@ namespace Gallery.BLL
     public interface IHashService
     {
         string ComputeSha256Hash(string rawData);
+        string ComputeSha256Hash(byte[] rawData);
     }
 }
