@@ -119,6 +119,34 @@ namespace Gallery.BLL
             return _mediaStorage.Upload(data, path);
         }
 
+        public async Task<bool> DeleteMediaAsync(string path)
+        {
+            var directoryName = Path.GetDirectoryName(path);
+
+            if (!Directory.Exists(directoryName))
+            {
+                throw new DirectoryNotFoundException(nameof(directoryName));
+            }
+
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException(nameof(path));
+            }
+
+            var isMediaExist = await _mediaRepository.IsMediaExistAsync(path);
+
+            if (isMediaExist)
+            {
+                var media = await _mediaRepository.GetMediaByNameAsync(path);
+                if (!media.IsDeleted)
+                {
+                    await _mediaRepository.ChangeDeleteStatusAsync(path, true);
+                }
+            }
+
+            return _mediaStorage.Delete(path);
+        }
+
         /*public static void LoadExifData(byte[] data)
         {
             string title;

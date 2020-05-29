@@ -12,5 +12,7 @@ namespace Gallery.BLL
        bool CompareBitmapsAsync(Bitmap bmp1, Bitmap bmp2);
 
        Task<bool> UploadImageAsync(byte[] data, string path, int userId);
+
+       Task<bool> DeleteMediaAsync(string path);
     }
 }

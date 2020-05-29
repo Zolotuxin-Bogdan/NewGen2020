@@ -26,48 +26,22 @@ namespace Gallery.Controllers
             _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
         }
 
-        
-        //Picture picture = new Picture();
-        //[HttpGet]
-
-        string PathFromConfig = ConfigurationManager.AppSettings["PathForSave"];
+        [Authorize]
+        [LogFilter]
         [HttpGet]
-        public ActionResult Delete(string pathForDelete = "")
+        public async Task<ActionResult> Delete(string pathForDelete)
         {
-            try
+            var mediaPath = Server.MapPath(pathForDelete);
+            var isDeleteSuccess = await _imageService.DeleteMediaAsync(mediaPath);
+
+            if (!isDeleteSuccess)
             {
-                if (pathForDelete.Replace(PathFromConfig, "").Replace(Path.GetFileName(pathForDelete), "").Replace("/", "") == HashService.ComputeSha256Hash(User.Identity.Name))
-                {
-                    if (pathForDelete != "" && Directory.Exists(Server.MapPath(pathForDelete.Replace(Path.GetFileName(pathForDelete), ""))))
-                        System.IO.File.Delete(Server.MapPath(pathForDelete));
-                    else
-                    {
-                        ViewBag.Error = "File not found!";
-                        return View("Error");
-                    }
-                }
-                else
-                {
-                    ViewBag.Error = "Authorisation Error!";
-                    return View("Error");
-                }
-            }
-            catch (Exception err)
-            {
-                ViewBag.Error = "Unexpected error: " + err.Message;
+                ViewBag.Error = "Something happened wrong... Try it again.";
                 return View("Error");
             }
+
             return RedirectToAction("Index");
-        }
 
-
-        public ActionResult Index()
-        {
-            return View();
-        }
-        public ActionResult Error()
-        {
-            return View();
         }
 
         [Authorize]
@@ -105,6 +79,16 @@ namespace Gallery.Controllers
             return RedirectToAction("Index");
 
         }
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+        public ActionResult Error()
+        {
+            return View();
+        }
+
 
         public ActionResult Upload()
         {
