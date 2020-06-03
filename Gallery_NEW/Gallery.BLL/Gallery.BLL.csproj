@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\CreateUserDTO.cs" />
+    <Compile Include="Contracts\ExifDTO.cs" />
     <Compile Include="Contracts\LoginAttemptDTO.cs" />
     <Compile Include="Contracts\UserDTO.cs" />
     <Compile Include="IHashService.cs" />
