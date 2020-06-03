@@ -50,8 +50,8 @@
     <Compile Include="Contracts\LoginAttemptDTO.cs" />
     <Compile Include="Contracts\UserDTO.cs" />
     <Compile Include="IHashService.cs" />
-    <Compile Include="IimageService.cs" />
-    <Compile Include="ImageService.cs" />
+    <Compile Include="IMediaService.cs" />
+    <Compile Include="MediaService.cs" />
     <Compile Include="HashService.cs" />
     <Compile Include="IUsersService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

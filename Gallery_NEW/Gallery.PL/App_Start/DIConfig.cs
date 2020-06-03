@@ -41,8 +41,8 @@ namespace Gallery.PL.App_Start
             builder.RegisterType<AuthenticationService>()
                 .As<IAuthenticationService>();
 
-            builder.RegisterType<ImageService>()
-                .As<IimageService>();
+            builder.RegisterType<MediaService>()
+                .As<IMediaService>();
 
             //builder.RegisterType<GalleryConfig>()
             //  .AsSelf();

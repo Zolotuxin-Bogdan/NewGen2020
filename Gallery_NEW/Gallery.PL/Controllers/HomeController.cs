@@ -19,23 +19,23 @@ namespace Gallery.Controllers
 {
     public class HomeController : Controller
     {
-        private IimageService _imageService;
+        private IMediaService _mediaService;
         private IHashService _hashService;
         private IPublisher _publisher;
-        public HomeController(IimageService imageService, IHashService hashService, IPublisher publisher)
+        public HomeController(IMediaService mediaService, IHashService hashService, IPublisher publisher)
         {
-            _imageService = imageService ?? throw new ArgumentNullException(nameof(imageService));
+            _mediaService = mediaService ?? throw new ArgumentNullException(nameof(mediaService));
             _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
             _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
         }
 
         [Authorize]
         [LogFilter]
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult> Delete(string pathForDelete)
         {
             var mediaPath = Server.MapPath(pathForDelete);
-            var isDeleteSuccess = await _imageService.DeleteMediaAsync(mediaPath);
+            var isDeleteSuccess = await _mediaService.DeleteMediaAsync(mediaPath);
 
             if (!isDeleteSuccess)
             {
@@ -72,7 +72,7 @@ namespace Gallery.Controllers
             var mediaPath = Path.Combine(directoryPath, _hashService.ComputeSha256Hash(data));
 
             var userId = Convert.ToInt32(User.Identity.Name);
-            var isUploadSuccess = await _imageService.UploadImageAsync(data, mediaPath, userId);
+            var isUploadSuccess = await _mediaService.UploadImageAsync(data, mediaPath, userId);
             if (!isUploadSuccess)
             {
                 ViewBag.Error = "Something happened wrong... Try it again.";

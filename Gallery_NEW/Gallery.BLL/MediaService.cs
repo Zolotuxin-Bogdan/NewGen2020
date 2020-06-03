@@ -16,13 +16,13 @@ using Gallery.DAL.Repositories.Interfaces;
 
 namespace Gallery.BLL
 {
-    public class ImageService : IimageService
+    public class MediaService : IMediaService
     {
         private readonly IMediaStorageProvider _mediaStorage;
         private readonly IMediaRepository _mediaRepository;
         private readonly IRepository _userRepository;
 
-        public ImageService(IMediaStorageProvider mediaStorage, 
+        public MediaService(IMediaStorageProvider mediaStorage, 
             IMediaRepository mediaRepository, 
             IRepository userRepository)
         {

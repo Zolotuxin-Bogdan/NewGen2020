@@ -8,7 +8,7 @@ using Gallery.BLL.Contracts;
 
 namespace Gallery.BLL
 {
-    public interface IimageService
+    public interface IMediaService
     {
        bool CompareBitmapsAsync(Bitmap bmp1, Bitmap bmp2);
 
