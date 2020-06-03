@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Gallery.BLL.Contracts;
 
 namespace Gallery.BLL
 {
@@ -14,5 +15,7 @@ namespace Gallery.BLL
        Task<bool> UploadImageAsync(byte[] data, string path, int userId);
 
        Task<bool> DeleteMediaAsync(string path);
+
+       ExifDTO GetExifData(byte[] data, string tempPath);
     }
 }

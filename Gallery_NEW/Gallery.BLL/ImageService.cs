@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Media.Imaging;
+using Gallery.BLL.Contracts;
 using Gallery.DAL.Model;
 using Gallery.DAL.Repositories.Interfaces;
 
@@ -147,112 +148,104 @@ namespace Gallery.BLL
             return _mediaStorage.Delete(path);
         }
 
-        /*public static void LoadExifData(byte[] data)
+        public ExifDTO GetExifData(byte[] data, string tempPath)
         {
-            string title;
-            string manufacturer;
-            string modelOfCamera;
-            string fileSize;
-            string dateCreation;
-            string dateUpload;
-            manufacturer = "Data not found";
-            modelOfCamera = "Data not found";
-            fileSize = "Data not found";
-            dateCreation = "Data not found";
-            dateUpload = "Data not found";
+            var tempDirectoryName = Path.GetDirectoryName(tempPath);
 
-
-            Stream stream = new MemoryStream(data);
-            FileInfo fileInfo = new FileInfo(stream);
-
-            //FileInfo fileInfo = new FileInfo(LoadExifPath);
-            //FileStream ExifFileStream = new FileStream(LoadExifPath, FileMode.Open);
-            try
+            if (!Directory.Exists(tempDirectoryName))
             {
+                throw new DirectoryNotFoundException(nameof(tempDirectoryName));
+            }
 
+            _mediaStorage.Upload(data, tempPath);
+
+            var exifDto = new ExifDTO();
+
+            using (Stream stream = new MemoryStream(data))
+            {
+                FileInfo fileInfo = new FileInfo(tempPath);
                 BitmapSource img = BitmapFrame.Create(stream);
                 BitmapMetadata md = (BitmapMetadata)img.Metadata;
 
                 //
-                //FileSize from FileInfo
+                // Title from EXIF
+                //
+                if (string.IsNullOrEmpty(md.Title))
+                {
+                    exifDto.Title = "Data not found";
+                }
+                else
+                {
+                    exifDto.Title = md.Title;
+                }
+
+                //
+                // Manufacturer from EXIF
+                //
+                if (string.IsNullOrEmpty(md.CameraManufacturer))
+                {
+                    exifDto.Manufacturer = "Data not found";
+                }
+                else
+                {
+                    exifDto.Manufacturer = md.CameraManufacturer;
+                }
+
+                //
+                // ModelOfCamera from EXIF
+                //
+                if (string.IsNullOrEmpty(md.CameraModel))
+                {
+                    exifDto.ModelOfCamera = "Data not found";
+                }
+                else
+                {
+                    exifDto.ModelOfCamera = md.CameraModel;
+                }
+
+                //
+                // DateCreation from EXIF
+                //
+                if (string.IsNullOrEmpty(md.DateTaken))
+                {
+                    exifDto.DateCreation = "Data not found";
+                }
+                else
+                {
+                    exifDto.DateCreation = md.DateTaken;
+                }
+
+                //
+                // FileSize from FileInfo
+                //
                 if (fileInfo.Length >= 1024)
                 {
-                    fileSize = Math.Round((fileInfo.Length / 1024f), 1).ToString() + " KB";
+                    exifDto.FileSize = Math.Round((fileInfo.Length / 1024f), 1).ToString() + " KB";
                     if ((fileInfo.Length / 1024f) >= 1024f)
                     {
-                        fileSize = Math.Round((fileInfo.Length / 1024f) / 1024f, 2).ToString() + " MB";
+                        exifDto.FileSize = Math.Round((fileInfo.Length / 1024f) / 1024f, 2).ToString() + " MB";
                     }
                 }
                 else
                 {
-                    fileSize = fileInfo.Length.ToString() + " B";
+                    exifDto.FileSize = fileInfo.Length.ToString() + " B";
                 }
 
                 //
-                //DateUpload from FileInfo
-                if (fileInfo.CreationTime == null)
-                {
-                    dateUpload = "Data not found";
-                }
-                else
-                {
-                    dateUpload = fileInfo.CreationTime.ToString("dd.MM.yyyy HH:mm:ss");
-                }
-
+                // DateUpload from FileInfo
                 //
-                //title from FileInfo
-                if (string.IsNullOrEmpty(fileInfo.Name))
+                if (string.IsNullOrEmpty(fileInfo.CreationTime.ToString("dd.MM.yyyy HH:mm:ss")))
                 {
-                    title = "Data not found";
+                    exifDto.DateUpload = "Data not found";
                 }
                 else
                 {
-                    title = fileInfo.Name;
-                }
-
-
-                //
-                //manufacturer from EXIF
-                if (string.IsNullOrEmpty(md.CameraManufacturer))
-                {
-                    manufacturer = "Data not found";
-                }
-                else
-                {
-                    manufacturer = md.CameraManufacturer;
-                }
-
-
-                //
-                //modelOfCamera from EXIF
-                if (string.IsNullOrEmpty(md.CameraModel))
-                {
-                    modelOfCamera = "Data not found";
-                }
-                else
-                {
-                    modelOfCamera = md.CameraModel;
-                }
-
-                //
-                //DateCreation from EXIF
-                if (string.IsNullOrEmpty(md.DateTaken))
-                {
-                    dateCreation = "Data not found";
-                }
-                else
-                {
-                    dateCreation = md.DateTaken;
+                    exifDto.DateUpload = fileInfo.CreationTime.ToString("dd.MM.yyyy HH:mm:ss");
                 }
             }
-            catch (Exception err)
-            {
 
-                // need to static errors
-            }
-            ExifFileStream.Close();
-
-        }*/
+            return exifDto;
+        }
 
 
     }
