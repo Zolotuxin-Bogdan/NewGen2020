@@ -109,11 +109,11 @@ namespace Gallery.BLL
                 {
                     Name = path,
 
-                    UserId = userId,
-                    User = user,
+                    IsDeleted = false,
 
-                    MediaTypeId = mediaType.Id,
-                    Type = mediaType
+                    UserId = userId,
+                    
+                    MediaTypeId = mediaType.Id
                 });
             }
 
