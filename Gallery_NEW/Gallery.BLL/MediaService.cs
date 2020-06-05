@@ -148,7 +148,7 @@ namespace Gallery.BLL
             return _mediaStorage.Delete(path);
         }
 
-        public ExifDTO GetExifData(byte[] data, string tempPath)
+        public ExifDTO GetExifData(string tempPath)
         {
             var tempDirectoryName = Path.GetDirectoryName(tempPath);
 
@@ -157,14 +157,12 @@ namespace Gallery.BLL
                 throw new DirectoryNotFoundException(nameof(tempDirectoryName));
             }
 
-            _mediaStorage.Upload(data, tempPath);
-
             var exifDto = new ExifDTO();
 
-            using (Stream stream = new MemoryStream(data))
+            using (FileStream fileStream = new FileStream(tempPath, FileMode.Open))
             {
                 FileInfo fileInfo = new FileInfo(tempPath);
-                BitmapSource img = BitmapFrame.Create(stream);
+                BitmapSource img = BitmapFrame.Create(fileStream);
                 BitmapMetadata md = (BitmapMetadata)img.Metadata;
 
                 //
