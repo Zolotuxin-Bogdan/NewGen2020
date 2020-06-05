@@ -13,7 +13,7 @@ namespace Gallery.DAL.Model.Configuration
         {
             ToTable("Media").HasKey(p => p.Id).Property(p => p.Id).IsRequired().HasColumnName("MediaId");
 
-            Property(p => p.Name).IsRequired().HasColumnType("varchar").HasMaxLength(50);
+            Property(p => p.Name).IsRequired().HasColumnType("varchar").HasMaxLength(255);
 
             HasRequired(p => p.Type)
                 .WithMany(d => d.Media)
