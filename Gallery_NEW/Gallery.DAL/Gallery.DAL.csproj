@@ -74,6 +74,7 @@
     <Compile Include="Migrations\202006051122169_Media_Name_Lenght_Changed_Migration.designer.cs">
       <DependentUpon>202006051122169_Media_Name_Lenght_Changed_Migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Configuration\TempMediaConfiguration.cs" />
     <Compile Include="Model\TempMedia.cs" />
     <Compile Include="Repositories\Interfaces\IMediaRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRepository.cs" />
