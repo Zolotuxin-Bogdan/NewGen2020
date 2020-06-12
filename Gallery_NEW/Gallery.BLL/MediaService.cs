@@ -120,6 +120,21 @@ namespace Gallery.BLL
             return _mediaStorage.Upload(data, path);
         }
 
+        public async Task<bool> UploadTempImageAsync(byte[] data, string path)
+        {
+            var directoryName = Path.GetDirectoryName(path);
+            if (!Directory.Exists(directoryName))
+            {
+                Directory.CreateDirectory(directoryName);
+            }
+
+            //
+            // Add record to UploadAttemptMedia
+            //
+
+           return _mediaStorage.Upload(data, path);
+        }
+
         public async Task<bool> DeleteMediaAsync(string path)
         {
             var directoryName = Path.GetDirectoryName(path);
