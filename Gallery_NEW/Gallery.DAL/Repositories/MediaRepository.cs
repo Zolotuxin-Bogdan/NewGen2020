@@ -25,6 +25,12 @@ namespace Gallery.DAL.Repositories
             await _ctx.SaveChangesAsync();
         }
 
+        public async Task RegisterTempMediaToDataBaseAsync(TempMedia tempMedia)
+        {
+            _ctx.TempMedia.Add(tempMedia);
+            await _ctx.SaveChangesAsync();
+        }
+
         public async Task ChangeDeleteStatusAsync(string name, bool status)
         {
             var media = await _ctx.Media.FirstOrDefaultAsync(p => p.Name == name);
