@@ -22,11 +22,13 @@ namespace Gallery.Controllers
         private IMediaService _mediaService;
         private IHashService _hashService;
         private IPublisher _publisher;
-        public HomeController(IMediaService mediaService, IHashService hashService, IPublisher publisher)
+        private IUsersService _usersService;
+        public HomeController(IMediaService mediaService, IHashService hashService, IPublisher publisher, IUsersService usersService)
         {
             _mediaService = mediaService ?? throw new ArgumentNullException(nameof(mediaService));
             _hashService = hashService ?? throw new ArgumentNullException(nameof(hashService));
             _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
+            _usersService = usersService ?? throw new ArgumentNullException(nameof(usersService));
         }
 
         [Authorize]
@@ -48,7 +50,7 @@ namespace Gallery.Controllers
         }
 
         [Authorize]
-        [LogFilter]
+        //[LogFilter]
         [HttpPost]
         public async Task<ActionResult> Upload(HttpPostedFileBase files)
         {
@@ -67,9 +69,17 @@ namespace Gallery.Controllers
                 memoryStream.Close();
             }
 
+            var mediaExtension = Path.GetExtension(files.FileName);
+
             var defaultPath = GalleryConfig.GetPathForSave();
+            var defaultTempPath = GalleryConfig.GetTempPath();
+
             var directoryPath = Server.MapPath(defaultPath) + _hashService.ComputeSha256Hash(User.Identity.Name);
-            var mediaPath = Path.Combine(directoryPath, _hashService.ComputeSha256Hash(data));
+
+            var mediaPath = Path.Combine(directoryPath, _hashService.ComputeSha256Hash(data) + mediaExtension);
+            var mediaTempPath = Path.Combine(defaultTempPath, _hashService.ComputeSha256Hash(data) + mediaExtension);
+
+            await _mediaService.UploadTempImageAsync(data, mediaTempPath);
 
             var userId = Convert.ToInt32(User.Identity.Name);
             var isUploadSuccess = await _mediaService.UploadImageAsync(data, mediaPath, userId);
@@ -80,21 +90,68 @@ namespace Gallery.Controllers
             }
 
             return RedirectToAction("Index");
-
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            var defaultPath = GalleryConfig.GetPathForSave();
+            var defaultTempPath = GalleryConfig.GetTempPath();
+
+            // Directory path with all User's directories
+            var fullDefaultPath = Server.MapPath(defaultPath);
+
+            // Directory path with temporary media
+            var tempImageDirectory = Server.MapPath(defaultTempPath);
+
+            if (!Directory.Exists(fullDefaultPath))
+            {
+                Directory.CreateDirectory(fullDefaultPath);
+            }
+
+            if (!Directory.Exists(tempImageDirectory))
+            {
+                Directory.CreateDirectory(tempImageDirectory);
+            }
+
+            if (Request.IsAuthenticated)
+            {
+                // Encrypted User's directory path
+                string userDirectoryPath = fullDefaultPath + _hashService.ComputeSha256Hash(User.Identity.Name);
+
+                if (!Directory.Exists(userDirectoryPath))
+                {
+                    Directory.CreateDirectory(userDirectoryPath);
+                }
+
+                var userId = Convert.ToInt32(User.Identity.Name);
+                var userEmail = _usersService.GetUserName(userId);
+
+                ViewData["UserEmail"] = userEmail;
+                ViewData["UserHashName"] = _hashService.ComputeSha256Hash(User.Identity.Name);
+            }
+
+            // Directory path with all User's media
+            var imageDirectories = Directory.GetDirectories(fullDefaultPath);
+
+            ViewData["Exif"] = (from dir in imageDirectories
+                from file in Directory.GetFiles(dir)
+                select _mediaService.GetExifData(file)).ToList();
+
             return View();
         }
+
         public ActionResult Error()
         {
             return View();
         }
 
-
         public ActionResult Upload()
         {
+            var userId = Convert.ToInt32(User.Identity.Name);
+            var userEmail = _usersService.GetUserName(userId);
+
+            ViewData["UserEmail"] = userEmail;
+
             return View();
         }
 

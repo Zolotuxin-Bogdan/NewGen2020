@@ -1,10 +1,7 @@
-﻿@using Gallery.BLL
-@using Gallery.DAL
-@using Gallery.DAL.Model
-
-@if (User.Identity.IsAuthenticated)
+﻿@if (User.Identity.IsAuthenticated)
 {
-    <li>@Html.ActionLink("UserName", "Index")</li>
+    var userEmail = (string) ViewData["UserEmail"];
+    <li>@Html.ActionLink(userEmail, "Index")</li>
     <li>@Html.ActionLink("Sign Out", "Logout", "Account")</li>
 }
 else
