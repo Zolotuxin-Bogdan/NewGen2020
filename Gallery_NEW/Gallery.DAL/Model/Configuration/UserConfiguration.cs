@@ -33,6 +33,10 @@ namespace Gallery.DAL.Model.Configuration
             HasMany(p => p.Attempts)
                 .WithRequired(d => d.User)
                 .HasForeignKey(c => c.UserId);
+
+            HasMany(p => p.TempMedia)
+                .WithRequired(d => d.User)
+                .HasForeignKey(c => c.UserId);
         }
     }
 }
