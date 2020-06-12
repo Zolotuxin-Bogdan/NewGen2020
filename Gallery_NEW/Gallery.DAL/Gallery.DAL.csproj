@@ -74,6 +74,10 @@
     <Compile Include="Migrations\202006051122169_Media_Name_Lenght_Changed_Migration.designer.cs">
       <DependentUpon>202006051122169_Media_Name_Lenght_Changed_Migration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202006121843284_Added_TempMedia_Table_Migration.cs" />
+    <Compile Include="Migrations\202006121843284_Added_TempMedia_Table_Migration.designer.cs">
+      <DependentUpon>202006121843284_Added_TempMedia_Table_Migration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Configuration\TempMediaConfiguration.cs" />
     <Compile Include="Model\TempMedia.cs" />
     <Compile Include="Repositories\Interfaces\IMediaRepository.cs" />
@@ -137,6 +141,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202006051122169_Media_Name_Lenght_Changed_Migration.resx">
       <DependentUpon>202006051122169_Media_Name_Lenght_Changed_Migration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006121843284_Added_TempMedia_Table_Migration.resx">
+      <DependentUpon>202006121843284_Added_TempMedia_Table_Migration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
