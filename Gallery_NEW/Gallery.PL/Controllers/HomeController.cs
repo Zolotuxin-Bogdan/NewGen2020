@@ -50,7 +50,7 @@ namespace Gallery.Controllers
         }
 
         [Authorize]
-        //[LogFilter]
+        [LogFilter]
         [HttpPost]
         public async Task<ActionResult> Upload(HttpPostedFileBase files)
         {
