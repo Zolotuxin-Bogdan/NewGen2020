@@ -22,8 +22,8 @@ namespace Gallery.BLL
         private readonly IMediaRepository _mediaRepository;
         private readonly IRepository _userRepository;
 
-        public MediaService(IMediaStorageProvider mediaStorage, 
-            IMediaRepository mediaRepository, 
+        public MediaService(IMediaStorageProvider mediaStorage,
+            IMediaRepository mediaRepository,
             IRepository userRepository)
         {
             _mediaStorage = mediaStorage ?? throw new ArgumentNullException(nameof(mediaStorage));
@@ -100,7 +100,7 @@ namespace Gallery.BLL
                 var isMediaTypeExist = await _mediaRepository.IsMediaTypeExistAsync(mediaExtension);
                 if (!isMediaTypeExist)
                 {
-                    await _mediaRepository.RegisterMediaTypeToDataBaseAsync(new MediaType {Type = mediaExtension});
+                    await _mediaRepository.RegisterMediaTypeToDataBaseAsync(new MediaType { Type = mediaExtension });
                 }
 
                 var mediaType = await _mediaRepository.GetMediaTypeByTypeAsync(mediaExtension);
@@ -112,7 +112,7 @@ namespace Gallery.BLL
                     IsDeleted = false,
 
                     UserId = userId,
-                    
+
                     MediaTypeId = mediaType.Id
                 });
             }
@@ -120,7 +120,7 @@ namespace Gallery.BLL
             return _mediaStorage.Upload(data, path);
         }
 
-        public async Task<bool> UploadTempImageAsync(byte[] data, string path)
+        public async Task<bool> UploadTempImageAsync(byte[] data, string path, TempMediaDTO tempMediaDto)
         {
             var directoryName = Path.GetDirectoryName(path);
             if (!Directory.Exists(directoryName))
@@ -129,10 +129,22 @@ namespace Gallery.BLL
             }
 
             //
-            // Add record to UploadAttemptMedia
+            // Add record to TempMedia table
             //
+            await _mediaRepository.RegisterTempMediaToDataBaseAsync(new TempMedia
+            {
+                Id = tempMediaDto.Id,
 
-           return _mediaStorage.Upload(data, path);
+                UniqName = tempMediaDto.UniqName,
+
+                IsLoading = tempMediaDto.IsLoading,
+
+                IsSuccess = tempMediaDto.IsSuccess,
+
+                UserId = tempMediaDto.UserId
+            });
+
+            return _mediaStorage.Upload(data, path);
         }
 
         public async Task<bool> DeleteMediaAsync(string path)

@@ -14,7 +14,7 @@ namespace Gallery.BLL
 
        Task<bool> UploadImageAsync(byte[] data, string path, int userId);
 
-       Task<bool> UploadTempImageAsync(byte[] data, string path);
+       Task<bool> UploadTempImageAsync(byte[] data, string path, TempMediaDTO tempMediaDto);
 
        Task<bool> DeleteMediaAsync(string path);
 
