@@ -19,6 +19,7 @@ namespace Gallery.DAL
             new List<Media>();
         public ICollection<LoginAttempt> Attempts { get; set; } =
             new List<LoginAttempt>();
-
+        public ICollection<TempMedia> TempMedia { get; set; } =
+            new List<TempMedia>();
     }
 }
