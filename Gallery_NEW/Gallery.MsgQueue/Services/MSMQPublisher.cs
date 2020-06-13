@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Gallery.PL.Interfaces;
 using System.Messaging;
+using Gallery.MsgQueue.Interfaces;
 
-namespace Gallery.PL.Services
+namespace Gallery.MsgQueue.Services
 {
     public class MsmqPublisher : IPublisher
     {

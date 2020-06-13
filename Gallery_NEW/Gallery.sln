@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStorageProvider", "File
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.Worker", "Gallery.Worker\Gallery.Worker.csproj", "{2E899857-CA6E-44F4-B98E-7AC479FD45B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.MessageQueue", "Gallery.MessageQueue\Gallery.MessageQueue.csproj", "{F7FC00A6-4E56-4F22-A1C6-21813779C29D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.MsgQueue", "Gallery.MsgQueue\Gallery.MsgQueue.csproj", "{AC1F0DC7-774D-48B8-9706-5A3441392D83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,10 +41,10 @@ Global
 		{2E899857-CA6E-44F4-B98E-7AC479FD45B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E899857-CA6E-44F4-B98E-7AC479FD45B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E899857-CA6E-44F4-B98E-7AC479FD45B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F7FC00A6-4E56-4F22-A1C6-21813779C29D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7FC00A6-4E56-4F22-A1C6-21813779C29D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F7FC00A6-4E56-4F22-A1C6-21813779C29D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7FC00A6-4E56-4F22-A1C6-21813779C29D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

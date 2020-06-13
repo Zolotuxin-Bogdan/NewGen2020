@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов для изменения сведений,
 // связанные со сборкой.
-[assembly: AssemblyTitle("Gallery.MessageQueue")]
+[assembly: AssemblyTitle("Gallery.MsgQueue")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Gallery.MessageQueue")]
+[assembly: AssemblyProduct("Gallery.MsgQueue")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("f7fc00a6-4e56-4f22-a1c6-21813779c29d")]
+[assembly: Guid("ac1f0dc7-774d-48b8-9706-5a3441392d83")]
 
 // Сведения о версии сборки состоят из указанных ниже четырех значений:
 //

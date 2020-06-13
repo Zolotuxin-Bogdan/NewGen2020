@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gallery.MessageQueue
+namespace Gallery.MsgQueue
 {
     public class Class1
     {

@@ -183,12 +183,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IAuthenticationService.cs" />
-    <Compile Include="Interfaces\IPublisher.cs" />
     <Compile Include="Manager\GalleryConfig.cs" />
     <Compile Include="Model\Models.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthenticationService.cs" />
-    <Compile Include="Services\MsmqPublisher.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
