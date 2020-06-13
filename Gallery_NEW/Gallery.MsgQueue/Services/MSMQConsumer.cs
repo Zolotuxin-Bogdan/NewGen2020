@@ -24,5 +24,10 @@ namespace Gallery.MsgQueue.Services
         {
             return _messageQueue.Receive().Body;
         }
+
+        public void SetMessageFormat(Type[] msgTypes)
+        {
+            _messageQueue.Formatter = new XmlMessageFormatter(msgTypes);
+        }
     }
 }

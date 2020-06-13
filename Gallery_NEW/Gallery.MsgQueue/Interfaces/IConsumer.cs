@@ -9,5 +9,6 @@ namespace Gallery.MsgQueue.Interfaces
     public interface IConsumer
     {
         object ReceiveFirstMessageBody();
+        void SetMessageFormat(Type[] msgTypes);
     }
 }
