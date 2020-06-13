@@ -4,13 +4,20 @@ using Gallery.MsgQueue.Interfaces;
 
 namespace Gallery.MsgQueue.Services
 {
-    public class MsmqPublisher : IPublisher
+    public class MSMQPublisher : IPublisher
     {
         private readonly MessageQueue _messageQueue;
+        private readonly string _messageQueuePath;
 
-        public MsmqPublisher(MessageQueue messageQueue)
+        public MSMQPublisher(string messageQueuePath)
         {
-            _messageQueue = messageQueue ?? throw new ArgumentNullException(nameof(messageQueue));
+            _messageQueuePath = messageQueuePath ?? throw new ArgumentNullException(nameof(messageQueuePath));
+            _messageQueue = new MessageQueue(_messageQueuePath);
+
+            if (!MessageQueue.Exists(_messageQueue.Path))
+            {
+                MessageQueue.Create(_messageQueue.Path);
+            }
         }
 
         public void SendMessage(object message, string label)
