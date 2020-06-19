@@ -77,6 +77,23 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\FileStorageProvider\FileStorageProvider.csproj">
+      <Project>{028A3860-2064-403D-AFCD-BAE20425E41C}</Project>
+      <Name>FileStorageProvider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gallery.BLL\Gallery.BLL.csproj">
+      <Project>{98535698-B6A3-46C3-A2AB-30D76D61F545}</Project>
+      <Name>Gallery.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gallery.DAL\Gallery.DAL.csproj">
+      <Project>{1DD1D45A-2A03-4AFD-A79E-A7E5912855C6}</Project>
+      <Name>Gallery.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gallery.MsgQueue\Gallery.MsgQueue.csproj">
+      <Project>{AC1F0DC7-774D-48B8-9706-5A3441392D83}</Project>
+      <Name>Gallery.MsgQueue</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

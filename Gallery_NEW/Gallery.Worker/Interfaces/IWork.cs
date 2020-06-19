@@ -10,6 +10,6 @@ namespace Gallery.Worker.Interfaces
     {
         Task StartAsync();
 
-        Task StopAsync();
+        void Stop();
     }
 }
