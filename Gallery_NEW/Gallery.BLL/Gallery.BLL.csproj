@@ -48,6 +48,7 @@
     <Compile Include="Contracts\CreateUserDTO.cs" />
     <Compile Include="Contracts\ExifDTO.cs" />
     <Compile Include="Contracts\LoginAttemptDTO.cs" />
+    <Compile Include="Contracts\MessageDTO.cs" />
     <Compile Include="Contracts\TempMediaDTO.cs" />
     <Compile Include="Contracts\UserDTO.cs" />
     <Compile Include="IHashService.cs" />
