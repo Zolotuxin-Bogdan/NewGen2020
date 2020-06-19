@@ -41,6 +41,13 @@ namespace Gallery.DAL.Repositories
             await _ctx.SaveChangesAsync();
         }
 
+        public async Task ChangeTempMediaAsync(TempMedia oldTempMedia, TempMedia newTempMedia)
+        {
+            oldTempMedia = newTempMedia;
+            _ctx.Entry(oldTempMedia).State = EntityState.Modified;
+            await _ctx.SaveChangesAsync();
+        }
+
         public async Task<Media> GetMediaByNameAsync(string name)
         {
             return await _ctx.Media.FirstOrDefaultAsync(p => p.Name == name);
