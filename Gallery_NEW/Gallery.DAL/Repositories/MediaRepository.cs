@@ -18,16 +18,13 @@ namespace Gallery.DAL.Repositories
             _ctx = ctx ?? throw new ArgumentNullException(nameof(ctx));
         }
 
+
+        //
         // Media
+        //
         public async Task RegisterMediaToDataBaseAsync(Media media)
         {
             _ctx.Media.Add(media);
-            await _ctx.SaveChangesAsync();
-        }
-
-        public async Task RegisterTempMediaToDataBaseAsync(TempMedia tempMedia)
-        {
-            _ctx.TempMedia.Add(tempMedia);
             await _ctx.SaveChangesAsync();
         }
 
@@ -41,16 +38,31 @@ namespace Gallery.DAL.Repositories
             await _ctx.SaveChangesAsync();
         }
 
+        public async Task<Media> GetMediaByNameAsync(string name)
+        {
+            return await _ctx.Media.FirstOrDefaultAsync(p => p.Name == name);
+        }
+
+        public async Task<bool> IsMediaExistAsync(string name)
+        {
+            return await _ctx.Media.AnyAsync(p => p.Name == name);
+        }
+
+
+        //
+        // TempMedia
+        //
+        public async Task RegisterTempMediaToDataBaseAsync(TempMedia tempMedia)
+        {
+            _ctx.TempMedia.Add(tempMedia);
+            await _ctx.SaveChangesAsync();
+        }
+
         public async Task ChangeTempMediaAsync(TempMedia oldTempMedia, TempMedia newTempMedia)
         {
             oldTempMedia = newTempMedia;
             _ctx.Entry(oldTempMedia).State = EntityState.Modified;
             await _ctx.SaveChangesAsync();
-        }
-
-        public async Task<Media> GetMediaByNameAsync(string name)
-        {
-            return await _ctx.Media.FirstOrDefaultAsync(p => p.Name == name);
         }
 
         public async Task<TempMedia> GetTempMediaByNameAndLoadingStatusAsync(string name, bool loadingStatus)
@@ -59,18 +71,16 @@ namespace Gallery.DAL.Repositories
                                                                  && p.IsLoading == loadingStatus);
         }
 
-        public async Task<bool> IsMediaExistAsync(string name)
-        {
-            return await _ctx.Media.AnyAsync(p => p.Name == name);
-        }
-
         public async Task<bool> IsTempMediaExistByNameAndLoadingStatusAsync(string name, bool loadingStatus)
         {
             return await _ctx.TempMedia.AnyAsync(p => p.UniqName == name
                                                       && p.IsLoading == loadingStatus);
         }
 
+
+        //
         // MediaType
+        //
         public async Task RegisterMediaTypeToDataBaseAsync(MediaType type)
         {
             _ctx.MediaType.Add(type);
