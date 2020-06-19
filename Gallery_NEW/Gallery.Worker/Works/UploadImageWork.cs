@@ -21,7 +21,7 @@ namespace Gallery.Worker.Works
         private readonly IMediaService _mediaService;
         private readonly IMediaRepository _mediaRepository;
         private readonly IMediaStorageProvider _mediaStorage;
-        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly TimeSpan _delayTime = TimeSpan.FromSeconds(1);
 
         public UploadImageWork(IConsumer consumer, IMediaService mediaService, IMediaRepository mediaRepository, IMediaStorageProvider mediaStorage)
