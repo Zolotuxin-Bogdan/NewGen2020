@@ -46,6 +46,12 @@ namespace Gallery.DAL.Repositories
             return await _ctx.Media.FirstOrDefaultAsync(p => p.Name == name);
         }
 
+        public async Task<TempMedia> GetTempMediaByNameAndLoadingStatusAsync(string name, bool loadingStatus)
+        {
+            return await _ctx.TempMedia.FirstOrDefaultAsync(p => p.UniqName == name
+                                                                 && p.IsLoading == loadingStatus);
+        }
+
         public async Task<bool> IsMediaExistAsync(string name)
         {
             return await _ctx.Media.AnyAsync(p => p.Name == name);
@@ -53,7 +59,7 @@ namespace Gallery.DAL.Repositories
 
         public async Task<bool> IsTempMediaExistByNameAndLoadingStatusAsync(string name, bool loadingStatus)
         {
-            return await _ctx.TempMedia.AnyAsync(p => p.UniqName == name 
+            return await _ctx.TempMedia.AnyAsync(p => p.UniqName == name
                                                       && p.IsLoading == loadingStatus);
         }
 
