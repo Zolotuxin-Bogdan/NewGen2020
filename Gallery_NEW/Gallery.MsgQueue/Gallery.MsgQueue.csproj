@@ -48,5 +48,11 @@
     <Compile Include="Services\MSMQConsumer.cs" />
     <Compile Include="Services\MSMQPublisher.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gallery.BLL\Gallery.BLL.csproj">
+      <Project>{98535698-B6A3-46C3-A2AB-30D76D61F545}</Project>
+      <Name>Gallery.BLL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

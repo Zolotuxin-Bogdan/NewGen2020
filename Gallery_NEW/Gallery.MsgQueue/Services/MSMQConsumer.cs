@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Messaging;
+using Gallery.BLL.Contracts;
 using Gallery.MsgQueue.Interfaces;
 
 namespace Gallery.MsgQueue.Services
@@ -22,6 +23,11 @@ namespace Gallery.MsgQueue.Services
         }
         public object ReceiveFirstMessageBody()
         {
+            SetMessageFormat(new Type[]
+            {
+                typeof(MessageDTO)
+            });
+
             return _messageQueue.Receive().Body;
         }
 
