@@ -10,7 +10,6 @@ namespace Gallery.BLL.Contracts
     {
         public int UserId;
         public string FileName;
-        public byte[] FileBytes;
         public string MainPath;
         public string TempPath;
 
