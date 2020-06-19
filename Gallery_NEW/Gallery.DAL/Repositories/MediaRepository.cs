@@ -51,6 +51,12 @@ namespace Gallery.DAL.Repositories
             return await _ctx.Media.AnyAsync(p => p.Name == name);
         }
 
+        public async Task<bool> IsTempMediaExistByNameAndLoadingStatusAsync(string name, bool loadingStatus)
+        {
+            return await _ctx.TempMedia.AnyAsync(p => p.UniqName == name 
+                                                      && p.IsLoading == loadingStatus);
+        }
+
         // MediaType
         public async Task RegisterMediaTypeToDataBaseAsync(MediaType type)
         {

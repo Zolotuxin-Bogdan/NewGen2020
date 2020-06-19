@@ -15,6 +15,7 @@ namespace Gallery.DAL.Repositories.Interfaces
         Task ChangeDeleteStatusAsync(string name, bool status);
         Task<Media> GetMediaByNameAsync(string name); //MediaDTO in Future
         Task<bool> IsMediaExistAsync(string name);
+        Task<bool> IsTempMediaExistByNameAndLoadingStatusAsync(string name, bool loadingStatus);
 
         // MediaType
         Task RegisterMediaTypeToDataBaseAsync(MediaType type);
