@@ -13,7 +13,7 @@ namespace Gallery.Worker
         private readonly IReadOnlyCollection<IWork> _works;
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
-        public WorkerWrapper(IReadOnlyCollection<IWork> works)
+        public WorkerWrapper(params IWork[] works)
         {
             _works = works ?? throw new ArgumentNullException(nameof(works));
         }
