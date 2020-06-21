@@ -15,7 +15,7 @@ namespace Gallery.MsgQueue.Services
             {
                 if (string.IsNullOrWhiteSpace(msg))
                 {
-                    throw new ArgumentNullException(nameof(msg));
+                    continue;
                 }
 
                 if (!MessageQueue.Exists(msg))
