@@ -21,14 +21,14 @@ namespace Gallery.MsgQueue.Services
             }
         }
 
-        public void SendMessage(object message, string label)
+        public void SendMessage(object message)
         {
             SetMessageFormat(new Type[]
             {
                 typeof(MessageDTO)
             });
 
-            _messageQueue.Send(message, label);
+            _messageQueue.Send(message);
         }
 
         public void SetMessageFormat(Type[] msgTypes)
