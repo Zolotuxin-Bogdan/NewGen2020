@@ -14,12 +14,6 @@ namespace Gallery.MsgQueue.Services
         {
             _messageQueuePath = messageQueuePath ?? throw new ArgumentNullException(nameof(messageQueuePath));
             _messageQueue = new MessageQueue(_messageQueuePath);
-
-            if (!MessageQueue.Exists(_messageQueue.Path))
-            {
-                MessageQueue.Create(_messageQueue.Path);
-            }
-
         }
         public object ReceiveFirstMessageBody()
         {
@@ -31,7 +25,7 @@ namespace Gallery.MsgQueue.Services
             return _messageQueue.Receive().Body;
         }
 
-        public void SetMessageFormat(Type[] msgTypes)
+        private void SetMessageFormat(Type[] msgTypes)
         {
             _messageQueue.Formatter = new XmlMessageFormatter(msgTypes);
         }
