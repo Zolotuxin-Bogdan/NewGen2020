@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Web.Http;
-using Gallery.DAL.Model;
+using Gallery.MsgQueue.Services;
+using Gallery.PL;
+using Gallery.PL.App_Start;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 
-[assembly: OwinStartup(typeof(Gallery.PL.App_Start.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 
-namespace Gallery.PL.App_Start
+namespace Gallery.PL
 {
     public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
+            var parseMessageQueue = MessageQueueParser.ParseMessageQueuePaths();
+            MessageQueueCreator.CreateMessageQueues(parseMessageQueue);
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = "ApplicationCookie",
