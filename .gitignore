@@ -14,5 +14,6 @@ Gallery_NEW/Gallery.MsgQueue/bin
 Gallery_NEW/Gallery.PL/logs
 Gallery_NEW/Gallery.DAL/DataBase
 Gallery_NEW/Gallery.PL/Upload
+Gallery_NEW/Gallery.PL/Temp
 Gallery_NEW/FileStorageProvider/obj
 Gallery_NEW/FileStorageProvider/bin
