@@ -11,9 +11,11 @@ using Gallery.BLL;
 using Gallery.DAL.Model;
 using Gallery.DAL.Repositories;
 using Gallery.DAL.Repositories.Interfaces;
+using Gallery.MsgQueue.Interfaces;
 using Gallery.PL.Interfaces;
 using Gallery.PL.Manager;
 using Gallery.PL.Services;
+using Gallery.MsgQueue.Services;
 
 namespace Gallery.PL.App_Start
 {
@@ -56,18 +58,11 @@ namespace Gallery.PL.App_Start
             builder.RegisterType<HashService>()
                 .As<IHashService>();
 
-            var queuePath = GalleryConfig.GetMessageQueuePath();
+            var parseMessageQueue = MessageQueueParser.ParseMessageQueuePaths();
 
-            using (var messageQueue = new MessageQueue(queuePath))
-            {
-                if (!MessageQueue.Exists(messageQueue.Path))
-                {
-                    MessageQueue.Create(messageQueue.Path);
-                }
-
-                builder.Register(p => new MsmqPublisher(messageQueue))
-                    .As<IPublisher>();
-            }
+            builder.Register(p => new MSMQPublisher(parseMessageQueue[0]))
+                .As<IPublisher>();
+            
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
