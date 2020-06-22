@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
-using System.Windows.Media.Imaging;
-using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Drawing.Imaging;
-using System.Configuration;
 using System.Web.Mvc;
 using Gallery.BLL;
 using System.Threading.Tasks;
+using Gallery.BLL.Contracts;
 using Gallery.PL.Filters;
-using Gallery.PL.Interfaces;
 using Gallery.PL.Manager;
+using Gallery.MsgQueue.Interfaces;
 
 namespace Gallery.Controllers
 {
@@ -70,25 +65,43 @@ namespace Gallery.Controllers
             }
 
             var mediaExtension = Path.GetExtension(files.FileName);
+            var uniqFileName = _hashService.ComputeSha256Hash(data);
 
             var defaultPath = GalleryConfig.GetPathForSave();
             var defaultTempPath = GalleryConfig.GetTempPath();
 
             var directoryPath = Server.MapPath(defaultPath) + _hashService.ComputeSha256Hash(User.Identity.Name);
+            var directoryTempPath = Server.MapPath(defaultTempPath);
 
             var mediaPath = Path.Combine(directoryPath, _hashService.ComputeSha256Hash(data) + mediaExtension);
-            var mediaTempPath = Path.Combine(defaultTempPath, _hashService.ComputeSha256Hash(data) + mediaExtension);
-
-            await _mediaService.UploadTempImageAsync(data, mediaTempPath);
+            var mediaTempPath = Path.Combine(directoryTempPath, _hashService.ComputeSha256Hash(data) + mediaExtension);
 
             var userId = Convert.ToInt32(User.Identity.Name);
-            var isUploadSuccess = await _mediaService.UploadImageAsync(data, mediaPath, userId);
-            if (!isUploadSuccess)
+
+            var tempMediaDTO = new TempMediaDTO
+            {
+                UniqName = uniqFileName,
+                IsLoading = true,
+                IsSuccess = false,
+                UserId = userId
+            };
+
+            var isTempUploadSuccess = await _mediaService.UploadTempImageAsync(data, mediaTempPath, tempMediaDTO);
+            if (!isTempUploadSuccess)
             {
                 ViewBag.Error = "Something happened wrong... Try it again.";
                 return View("Error");
             }
 
+            var messageDTO = new MessageDTO
+            {
+                UserId = userId,
+                FileName = uniqFileName,
+                MainPath = mediaPath,
+                TempPath = mediaTempPath
+            };
+
+            _publisher.SendMessage(messageDTO);
             return RedirectToAction("Index");
         }
 
