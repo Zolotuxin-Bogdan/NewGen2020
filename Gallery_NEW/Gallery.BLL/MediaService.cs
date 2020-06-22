@@ -133,8 +133,6 @@ namespace Gallery.BLL
             //
             await _mediaRepository.RegisterTempMediaToDataBaseAsync(new TempMedia
             {
-                Id = tempMediaDto.Id,
-
                 UniqName = tempMediaDto.UniqName,
 
                 IsLoading = tempMediaDto.IsLoading,
