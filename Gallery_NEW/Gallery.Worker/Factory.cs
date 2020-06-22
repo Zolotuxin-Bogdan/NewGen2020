@@ -4,27 +4,30 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FileStorageProvider.Providers;
+using Gallery.BLL;
+using Gallery.DAL.Model;
+using Gallery.DAL.Repositories;
+using Gallery.MsgQueue.Services;
+using Gallery.Worker.Interfaces;
+using Gallery.Worker.Works;
 
 namespace Gallery.Worker
 {
     public static class Factory
     {
-        public static ConsumerConfiguration ParseConsumerConfiguration()
+        public static IWork GetUploadImageWork()
         {
-            var path = ConfigurationManager.AppSettings["msmq:path"] ?? @".\private$\MQ";
+            var connectionString = ConfigurationManager.ConnectionStrings["sql"] ?? throw new ArgumentException("SQL");
+            var parseMessageQueues = MessageQueueParser.ParseMessageQueuePaths();
 
-            return new ConsumerConfiguration(
-                path: @".\private$\MQ");
-        }
-    }
+            var uploadImageWork = new UploadImageWork(new MSMQConsumer(parseMessageQueues[0]), 
+                new MediaService(new MediaStorageProvider(), 
+                    new MediaRepository(new GalleryContext(connectionString.ConnectionString)), 
+                    new UsersRepository(new GalleryContext(connectionString.ConnectionString))), 
+                new MediaRepository(new GalleryContext(connectionString.ConnectionString)), new MediaStorageProvider());
 
-    public class ConsumerConfiguration
-    {
-        public string Path { get; }
-
-        public ConsumerConfiguration(string path)
-        {
-            Path = path ?? throw new ArgumentNullException(nameof(path));
+            return uploadImageWork;
         }
     }
 }
