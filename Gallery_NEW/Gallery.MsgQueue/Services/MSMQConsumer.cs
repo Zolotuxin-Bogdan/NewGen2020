@@ -2,32 +2,26 @@
 using System.Messaging;
 using Gallery.BLL.Contracts;
 using Gallery.MsgQueue.Interfaces;
+using Newtonsoft.Json;
 
 namespace Gallery.MsgQueue.Services
 {
     public class MSMQConsumer : IConsumer
     {
-        private readonly MessageQueue _messageQueue;
-        private readonly string _messageQueuePath;
-
-        public MSMQConsumer(string messageQueuePath)
+        public T ReceiveFirstMessageBody<T>(string messageQueuePath)
         {
-            _messageQueuePath = messageQueuePath ?? throw new ArgumentNullException(nameof(messageQueuePath));
-            _messageQueue = new MessageQueue(_messageQueuePath);
-        }
-        public object ReceiveFirstMessageBody()
-        {
-            SetMessageFormat(new Type[]
+            var messageQueue = new MessageQueue(messageQueuePath)
             {
-                typeof(MessageDTO)
-            });
+                Formatter = new XmlMessageFormatter(new Type[]
+                {
+                    typeof(string)
+                })
+            };
 
-            return _messageQueue.Receive().Body;
+            return DeserializeJson<T>((string)messageQueue.Receive().Body);
         }
 
-        private void SetMessageFormat(Type[] msgTypes)
-        {
-            _messageQueue.Formatter = new XmlMessageFormatter(msgTypes);
-        }
+        private static T DeserializeJson<T>(string obj) => 
+            JsonConvert.DeserializeObject<T>(obj);
     }
 }
