@@ -8,7 +8,7 @@ namespace Gallery.MsgQueue.Services
 {
     public class MSMQConsumer : IConsumer
     {
-        public T ReceiveFirstMessageBody<T>(string messageQueuePath)
+        public T ReceiveFirstMessage<T>(string messageQueuePath)
         {
             var messageQueue = new MessageQueue(messageQueuePath)
             {

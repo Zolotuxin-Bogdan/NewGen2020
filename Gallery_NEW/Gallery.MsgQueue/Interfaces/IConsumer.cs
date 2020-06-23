@@ -8,6 +8,6 @@ namespace Gallery.MsgQueue.Interfaces
 {
     public interface IConsumer
     {
-        T ReceiveFirstMessageBody<T>(string messageQueuePath);
+        T ReceiveFirstMessage<T>(string messageQueuePath);
     }
 }
