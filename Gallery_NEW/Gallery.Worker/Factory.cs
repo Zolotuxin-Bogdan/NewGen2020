@@ -21,7 +21,7 @@ namespace Gallery.Worker
             var connectionString = ConfigurationManager.ConnectionStrings["sql"] ?? throw new ArgumentException("SQL");
             var parseMessageQueues = MessageQueueParser.ParseMessageQueuePaths();
 
-            var uploadImageWork = new UploadImageWork(new MSMQConsumer(parseMessageQueues[0]), 
+            var uploadImageWork = new UploadImageWork(new MSMQConsumer(), 
                 new MediaService(new MediaStorageProvider(), 
                     new MediaRepository(new GalleryContext(connectionString.ConnectionString)), 
                     new UsersRepository(new GalleryContext(connectionString.ConnectionString))), 
