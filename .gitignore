@@ -12,6 +12,7 @@ Gallery_NEW/Gallery.Worker/bin
 Gallery_NEW/Gallery.MsgQueue/obj
 Gallery_NEW/Gallery.MsgQueue/bin
 Gallery_NEW/Gallery.PL/logs
+Gallery_NEW/Gallery.Worker/logs
 Gallery_NEW/Gallery.DAL/DataBase
 Gallery_NEW/Gallery.PL/Upload
 Gallery_NEW/Gallery.PL/Temp
