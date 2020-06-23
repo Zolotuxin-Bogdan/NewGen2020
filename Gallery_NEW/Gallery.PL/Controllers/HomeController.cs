@@ -9,6 +9,7 @@ using Gallery.BLL.Contracts;
 using Gallery.PL.Filters;
 using Gallery.PL.Manager;
 using Gallery.MsgQueue.Interfaces;
+using Gallery.MsgQueue.Services;
 
 namespace Gallery.Controllers
 {
@@ -101,7 +102,10 @@ namespace Gallery.Controllers
                 TempPath = mediaTempPath
             };
 
-            _publisher.SendMessage(messageDTO);
+            var parseMessageQueue = MessageQueueParser.ParseMessageQueuePaths();
+
+            _publisher.SendMessage(messageDTO, parseMessageQueue[0]);
+
             return RedirectToAction("Index");
         }
 
