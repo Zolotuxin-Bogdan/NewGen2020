@@ -19,7 +19,6 @@ namespace Gallery.Worker
         public static IWork GetUploadImageWork()
         {
             var connectionString = ConfigurationManager.ConnectionStrings["sql"] ?? throw new ArgumentException("SQL");
-            var parseMessageQueues = MessageQueueParser.ParseMessageQueuePaths();
 
             var uploadImageWork = new UploadImageWork(new MSMQConsumer(), 
                 new MediaService(new MediaStorageProvider(), 
