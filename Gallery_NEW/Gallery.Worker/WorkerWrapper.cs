@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Gallery.Worker.Interfaces;
+using NLog;
 
 namespace Gallery.Worker
 {
@@ -12,6 +11,7 @@ namespace Gallery.Worker
     {
         private readonly IReadOnlyCollection<IWork> _works;
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public WorkerWrapper(params IWork[] works)
         {
@@ -20,6 +20,7 @@ namespace Gallery.Worker
 
         public async Task StartAsync()
         {
+            Logger.Info("All works are starting.");
             foreach (var work in _works)
             {
                 await Task.Factory.StartNew(work.StartAsync,
@@ -31,7 +32,18 @@ namespace Gallery.Worker
 
         public void Stop()
         {
+            Logger.Info("All works are stopping.");
             _cancellationTokenSource.Cancel();
+
+            /*foreach (var work in _works)
+            {
+                Task.Factory.StartNew(work.Stop,
+                   _cancellationTokenSource.Token,
+                   TaskCreationOptions.LongRunning,
+                   TaskScheduler.Current);
+            }*/
+
+            Logger.Info("All works stopped.");
         }
     }
 }
