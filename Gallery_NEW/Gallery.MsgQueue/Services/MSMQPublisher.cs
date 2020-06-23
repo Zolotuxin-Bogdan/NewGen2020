@@ -2,38 +2,26 @@
 using System.Messaging;
 using Gallery.BLL.Contracts;
 using Gallery.MsgQueue.Interfaces;
+using Newtonsoft.Json;
 
 namespace Gallery.MsgQueue.Services
 {
     public class MSMQPublisher : IPublisher
     {
-        private readonly MessageQueue _messageQueue;
-        private readonly string _messageQueuePath;
-
-        public MSMQPublisher(string messageQueuePath)
+        public void SendMessage<T>(T message, string messageQueuePath)
         {
-            _messageQueuePath = messageQueuePath ?? throw new ArgumentNullException(nameof(messageQueuePath));
-            _messageQueue = new MessageQueue(_messageQueuePath);
-
-            if (!MessageQueue.Exists(_messageQueue.Path))
+            var messageQueue = new MessageQueue(messageQueuePath)
             {
-                MessageQueue.Create(_messageQueue.Path);
-            }
+                Formatter = new XmlMessageFormatter(new Type[]
+                {
+                    typeof(string)
+                })
+            };
+            var messageJson = SerializeToJson(message);
+            messageQueue.Send(messageJson);
         }
 
-        public void SendMessage(object message)
-        {
-            SetMessageFormat(new Type[]
-            {
-                typeof(MessageDTO)
-            });
-
-            _messageQueue.Send(message);
-        }
-
-        public void SetMessageFormat(Type[] msgTypes)
-        {
-            _messageQueue.Formatter = new XmlMessageFormatter(msgTypes);
-        }
+        private static string SerializeToJson<T>(T obj) =>
+            JsonConvert.SerializeObject(obj);
     }
 }

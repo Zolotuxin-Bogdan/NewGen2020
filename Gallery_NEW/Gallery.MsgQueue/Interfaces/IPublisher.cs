@@ -4,6 +4,6 @@ namespace Gallery.MsgQueue.Interfaces
 {
     public interface IPublisher
     {
-        void SendMessage(object message);
+        void SendMessage<T>(T message, string messageQueuePath);
     }
 }
