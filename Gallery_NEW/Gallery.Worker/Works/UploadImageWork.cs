@@ -11,6 +11,7 @@ using Gallery.BLL.Contracts;
 using Gallery.DAL.Model;
 using Gallery.DAL.Repositories.Interfaces;
 using Gallery.MsgQueue.Interfaces;
+using Gallery.MsgQueue.Services;
 using Gallery.Worker.Interfaces;
 
 namespace Gallery.Worker.Works
@@ -34,11 +35,11 @@ namespace Gallery.Worker.Works
 
         public async Task StartAsync()
         {
+            var parseMessageQueues = MessageQueueParser.ParseMessageQueuePaths();
+
             while (!_cancellationTokenSource.IsCancellationRequested)
             {
-                var messageBody = _consumer.ReceiveFirstMessageBody();
-
-                var messageDTO = (messageBody as MessageDTO) ?? throw new ArgumentNullException(nameof(messageBody));
+                var messageDTO = _consumer.ReceiveFirstMessage<MessageDTO>(parseMessageQueues[0]);
 
                 if (!File.Exists(messageDTO.TempPath))
                 {
