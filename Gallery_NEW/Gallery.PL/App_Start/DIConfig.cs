@@ -58,9 +58,7 @@ namespace Gallery.PL.App_Start
             builder.RegisterType<HashService>()
                 .As<IHashService>();
 
-            var parseMessageQueue = MessageQueueParser.ParseMessageQueuePaths();
-
-            builder.Register(p => new MSMQPublisher(parseMessageQueue[0]))
+            builder.Register(p => new MSMQPublisher())
                 .As<IPublisher>();
             
 
