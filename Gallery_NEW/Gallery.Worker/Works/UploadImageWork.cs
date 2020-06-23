@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using FileStorageProvider.Interfaces;
 using Gallery.BLL;
 using Gallery.BLL.Contracts;
-using Gallery.DAL.Model;
 using Gallery.DAL.Repositories.Interfaces;
 using Gallery.MsgQueue.Interfaces;
 using Gallery.MsgQueue.Services;
 using Gallery.Worker.Interfaces;
+using NLog;
 
 namespace Gallery.Worker.Works
 {
@@ -24,6 +21,7 @@ namespace Gallery.Worker.Works
         private readonly IMediaStorageProvider _mediaStorage;
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly TimeSpan _delayTime = TimeSpan.FromSeconds(1);
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public UploadImageWork(IConsumer consumer, IMediaService mediaService, IMediaRepository mediaRepository, IMediaStorageProvider mediaStorage)
         {
@@ -65,13 +63,16 @@ namespace Gallery.Worker.Works
                     await _mediaRepository.ChangeTempMediaAsync(tempMedia, newTempMedia);
                 }
 
+                Logger.Info("Started " + nameof(UploadImageWork) + ".");
                 await Task.Delay(_delayTime);
             }
         }
 
         public void Stop()
-        { 
+        {
+            Logger.Info("Stopping " + nameof(UploadImageWork) + ".");
             _cancellationTokenSource.Cancel();
+            Logger.Info("Stoped " + nameof(UploadImageWork) + ".");
         }
     }
 }
