@@ -102,9 +102,9 @@ namespace Gallery.Controllers
                 TempPath = mediaTempPath
             };
 
-            var parseMessageQueue = MessageQueueParser.ParseMessageQueuePaths();
+            var parseMsmqMessageQueue = MessageQueueParser.ParseMsmqMessageQueuePaths();
 
-            _publisher.SendMessage(messageDTO, parseMessageQueue[0]);
+            _publisher.SendMessage(messageDTO, parseMsmqMessageQueue[0]);
 
             return RedirectToAction("Index");
         }

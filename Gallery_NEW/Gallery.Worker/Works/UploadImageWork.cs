@@ -33,7 +33,7 @@ namespace Gallery.Worker.Works
 
         public async Task StartAsync()
         {
-            var parseMessageQueues = MessageQueueParser.ParseMessageQueuePaths();
+            var parseMessageQueues = MessageQueueParser.ParseMsmqMessageQueuePaths();
 
             while (!_cancellationTokenSource.IsCancellationRequested)
             {

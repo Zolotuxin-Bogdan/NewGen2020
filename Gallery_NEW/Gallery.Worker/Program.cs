@@ -6,8 +6,8 @@ namespace Gallery.Worker
     {
         static void Main(string[] args)
         {
-            var parseMessageQueue = MessageQueueParser.ParseMessageQueuePaths();
-            MessageQueueCreator.CreateMessageQueues(parseMessageQueue);
+            var parseMsmqMessageQueue = MessageQueueParser.ParseMsmqMessageQueuePaths();
+            MessageQueueCreator.CreateMessageQueues(parseMsmqMessageQueue);
 
             TopShelfConfig.Configure();
         }
