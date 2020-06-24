@@ -15,5 +15,12 @@ namespace Gallery.MsgQueue.Services
 
             return messageQueues.Split(',').ToList();
         }
+
+        public static List<string> ParseRabbitMQMessageQueuePaths()
+        {
+            var messageQueues = ConfigurationManager.AppSettings["RabbitMQ:paths"] ?? throw new ArgumentException("RabbitMQ:paths");
+
+            return messageQueues.Split(',').ToList();
+        }
     }
 }
