@@ -11,7 +11,7 @@ namespace Gallery.MsgQueue.Services
     {
         public static List<string> ParseMessageQueuePaths()
         { 
-            var messageQueues = ConfigurationManager.AppSettings["msgQueue:paths"] ?? throw new ArgumentException("msgQueue:paths");
+            var messageQueues = ConfigurationManager.AppSettings["MSMQ:paths"] ?? throw new ArgumentException("MSMQ:paths");
 
             return messageQueues.Split(',').ToList();
         }
