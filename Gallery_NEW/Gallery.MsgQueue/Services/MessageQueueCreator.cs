@@ -27,7 +27,6 @@ namespace Gallery.MsgQueue.Services
         public static void CreateRabbitMQMessageQueues(List<string> msgQueueList)
         {
             var connectionString = new Uri(ParseRabbitMQConnectionString());
-            ;
             var factory = new ConnectionFactory() {Uri = connectionString};
             using (var connection = factory.CreateConnection())
             {
