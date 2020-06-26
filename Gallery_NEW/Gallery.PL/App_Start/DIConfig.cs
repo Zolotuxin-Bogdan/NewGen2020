@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Messaging;
 using System.Web.Http;
 using System.Web.Mvc;
 using Autofac;
@@ -13,7 +12,6 @@ using Gallery.DAL.Repositories;
 using Gallery.DAL.Repositories.Interfaces;
 using Gallery.MsgQueue.Interfaces;
 using Gallery.PL.Interfaces;
-using Gallery.PL.Manager;
 using Gallery.PL.Services;
 using Gallery.MsgQueue.Services;
 
@@ -58,9 +56,19 @@ namespace Gallery.PL.App_Start
             builder.RegisterType<HashService>()
                 .As<IHashService>();
 
-            builder.Register(p => new MSMQPublisher())
+            //
+            // MSMQ registration
+            //
+
+            // builder.Register(p => new MSMQPublisher())
+            //    .As<IPublisher>();
+
+            //
+            // RabbitMQ registration
+            //
+
+            builder.Register(p => new RabbitMQPublisher())
                 .As<IPublisher>();
-            
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();
