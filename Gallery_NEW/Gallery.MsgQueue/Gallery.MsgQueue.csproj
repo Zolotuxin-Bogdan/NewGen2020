@@ -94,6 +94,7 @@
     <Compile Include="Services\MessageQueueParser.cs" />
     <Compile Include="Services\MSMQConsumer.cs" />
     <Compile Include="Services\MSMQPublisher.cs" />
+    <Compile Include="Services\RabbitMQPublisher.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gallery.BLL\Gallery.BLL.csproj">
