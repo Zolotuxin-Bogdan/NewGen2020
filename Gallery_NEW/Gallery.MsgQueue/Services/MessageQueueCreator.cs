@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gallery.MsgQueue.Services
 {
     public static class MessageQueueCreator
     {
-        public static void CreateMessageQueues(List<string> msgQueueList)
+        public static void CreateMSMQMessageQueues(List<string> msgQueueList)
         {
             foreach (var msg in msgQueueList)
             {

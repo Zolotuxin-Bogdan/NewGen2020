@@ -16,7 +16,7 @@ namespace Gallery.PL
         public void Configuration(IAppBuilder app)
         {
             var parseMsmqMessageQueue = MessageQueueParser.ParseMsmqMessageQueuePaths();
-            MessageQueueCreator.CreateMessageQueues(parseMsmqMessageQueue);
+            MessageQueueCreator.CreateMSMQMessageQueues(parseMsmqMessageQueue);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
