@@ -20,7 +20,7 @@ namespace Gallery.Worker
         {
             var connectionString = ConfigurationManager.ConnectionStrings["sql"] ?? throw new ArgumentException("SQL");
 
-            var uploadImageWork = new UploadImageWork(new MSMQConsumer(), 
+            var uploadImageWork = new UploadImageWork(new RabbitMQConsumer(), 
                 new MediaService(new MediaStorageProvider(), 
                     new MediaRepository(new GalleryContext(connectionString.ConnectionString)), 
                     new UsersRepository(new GalleryContext(connectionString.ConnectionString))), 

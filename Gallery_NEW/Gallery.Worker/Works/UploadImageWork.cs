@@ -33,11 +33,12 @@ namespace Gallery.Worker.Works
 
         public async Task StartAsync()
         {
-            var parseMessageQueues = MessageQueueParser.ParseMsmqMessageQueuePaths();
+            var parseMSMQMessageQueues = MessageQueueParser.ParseMsmqMessageQueuePaths();
+            var parseRabbitMQMessageQueue = MessageQueueParser.ParseRabbitMQMessageQueuePaths();
 
             while (!_cancellationTokenSource.IsCancellationRequested)
             {
-                var messageDTO = _consumer.ReceiveFirstMessage<MessageDTO>(parseMessageQueues[0]);
+                var messageDTO = _consumer.ReceiveFirstMessage<MessageDTO>(parseRabbitMQMessageQueue[0]);
 
                 if (!File.Exists(messageDTO.TempPath))
                 {
