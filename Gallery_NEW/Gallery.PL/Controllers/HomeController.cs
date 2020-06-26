@@ -103,8 +103,9 @@ namespace Gallery.Controllers
             };
 
             var parseMsmqMessageQueue = MessageQueueParser.ParseMsmqMessageQueuePaths();
+            var parseRabbitMQMessageQueue = MessageQueueParser.ParseRabbitMQMessageQueuePaths();
 
-            _publisher.SendMessage(messageDTO, parseMsmqMessageQueue[0]);
+            _publisher.SendMessage(messageDTO, parseRabbitMQMessageQueue[0]);
 
             return RedirectToAction("Index");
         }
