@@ -9,6 +9,9 @@ namespace Gallery.Worker
             var parseMsmqMessageQueue = MessageQueueParser.ParseMsmqMessageQueuePaths();
             MessageQueueCreator.CreateMSMQMessageQueues(parseMsmqMessageQueue);
 
+            var parseRabbitMQMessageQueue = MessageQueueParser.ParseRabbitMQMessageQueuePaths();
+            MessageQueueCreator.CreateRabbitMQMessageQueues(parseRabbitMQMessageQueue);
+
             TopShelfConfig.Configure();
         }
     }
