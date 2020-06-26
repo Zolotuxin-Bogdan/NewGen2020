@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.Messaging;
+using RabbitMQ.Client;
 
 namespace Gallery.MsgQueue.Services
 {
@@ -7,18 +10,47 @@ namespace Gallery.MsgQueue.Services
     {
         public static void CreateMSMQMessageQueues(List<string> msgQueueList)
         {
-            foreach (var msg in msgQueueList)
+            foreach (var queue in msgQueueList)
             {
-                if (string.IsNullOrWhiteSpace(msg))
+                if (string.IsNullOrWhiteSpace(queue))
                 {
                     continue;
                 }
 
-                if (!MessageQueue.Exists(msg))
+                if (!MessageQueue.Exists(queue))
                 {
-                    MessageQueue.Create(msg);
+                    MessageQueue.Create(queue);
                 }
             }
         }
+
+        public static void CreateRabbitMQMessageQueues(List<string> msgQueueList)
+        {
+            var connectionString = new Uri(ParseRabbitMQConnectionString());
+            ;
+            var factory = new ConnectionFactory() {Uri = connectionString};
+            using (var connection = factory.CreateConnection())
+            {
+                using (var channel = connection.CreateModel())
+                {
+                    foreach (var queue in msgQueueList)
+                    {
+                        channel.QueueDeclare(queue: queue,
+                            durable: false,
+                            exclusive: false,
+                            autoDelete: false,
+                            arguments: null);
+                    }
+                }
+            }
+        }
+
+        private static string ParseRabbitMQConnectionString()
+        {
+            var connectionString = ConfigurationManager.AppSettings["RabbitMQ:uri"] ??
+                                   throw new ArgumentException("RabbitMQ:uri");
+            return connectionString;
+        }
+
     }
 }
