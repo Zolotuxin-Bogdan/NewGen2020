@@ -18,6 +18,9 @@ namespace Gallery.PL
             var parseMsmqMessageQueue = MessageQueueParser.ParseMsmqMessageQueuePaths();
             MessageQueueCreator.CreateMSMQMessageQueues(parseMsmqMessageQueue);
 
+            var parseRabbitMQMessageQueue = MessageQueueParser.ParseRabbitMQMessageQueuePaths();
+            MessageQueueCreator.CreateRabbitMQMessageQueues(parseRabbitMQMessageQueue);
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = "ApplicationCookie",
