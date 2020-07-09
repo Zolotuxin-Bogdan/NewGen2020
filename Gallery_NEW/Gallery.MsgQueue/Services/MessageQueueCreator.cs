@@ -8,23 +8,25 @@ namespace Gallery.MsgQueue.Services
 {
     public static class MessageQueueCreator
     {
-        public static void CreateMSMQMessageQueues(List<string> msgQueueList)
+        public static void CreateMSMQMessageQueues(Dictionary<string, string> msgQueueDictionary)
         {
-            foreach (var queue in msgQueueList)
+            foreach (var queue in msgQueueDictionary)
             {
-                if (string.IsNullOrWhiteSpace(queue))
+                if (string.IsNullOrWhiteSpace(queue.Value))
                 {
                     continue;
                 }
 
-                if (!MessageQueue.Exists(queue))
+                var MSMQueue = ".\\private$\\" + queue.Value;
+
+                if (!MessageQueue.Exists(MSMQueue))
                 {
-                    MessageQueue.Create(queue);
+                    MessageQueue.Create(MSMQueue);
                 }
             }
         }
 
-        public static void CreateRabbitMQMessageQueues(List<string> msgQueueList)
+        public static void CreateRabbitMQMessageQueues(Dictionary<string, string> msgQueueDictionary)
         {
             var connectionString = new Uri(ParseRabbitMQConnectionString());
             var factory = new ConnectionFactory() {Uri = connectionString};
@@ -32,9 +34,9 @@ namespace Gallery.MsgQueue.Services
             {
                 using (var channel = connection.CreateModel())
                 {
-                    foreach (var queue in msgQueueList)
+                    foreach (var queue in msgQueueDictionary)
                     {
-                        channel.QueueDeclare(queue: queue,
+                        channel.QueueDeclare(queue: queue.Value,
                             durable: false,
                             exclusive: false,
                             autoDelete: false,
