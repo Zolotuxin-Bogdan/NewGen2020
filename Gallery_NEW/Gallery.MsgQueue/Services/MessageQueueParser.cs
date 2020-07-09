@@ -9,18 +9,20 @@ namespace Gallery.MsgQueue.Services
 {
     public static class MessageQueueParser
     {
-        public static List<string> ParseMsmqMessageQueuePaths()
-        { 
-            var messageQueues = ConfigurationManager.AppSettings["MSMQ:paths"] ?? throw new ArgumentException("MSMQ:paths");
-
-            return messageQueues.Split(',').ToList();
-        }
-
-        public static List<string> ParseRabbitMQMessageQueuePaths()
+        public static Dictionary<string, string> ParseMessageQueuePathsDictionary()
         {
-            var messageQueues = ConfigurationManager.AppSettings["RabbitMQ:paths"] ?? throw new ArgumentException("RabbitMQ:paths");
+            var upload_Image = ConfigurationManager.AppSettings["MQ:upload-image"] ?? throw new ArgumentException("MQ:upload-image");
+            var upload_Mp3 = ConfigurationManager.AppSettings["MQ:upload-mp3"] ?? throw new ArgumentException("MQ:upload-mp3");
+            var upload_Mp4 = ConfigurationManager.AppSettings["MQ:upload-mp4"] ?? throw new ArgumentException("MQ:upload-mp4");
 
-            return messageQueues.Split(',').ToList();
+            Dictionary<string, string> msgQueuePathsDictionary = new Dictionary<string, string>
+            {
+                ["upload_image"] = upload_Image,
+                ["upload_mp3"] = upload_Mp3,
+                ["upload_mp4"] = upload_Mp4
+            };
+
+            return msgQueuePathsDictionary;
         }
     }
 }
