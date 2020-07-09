@@ -15,11 +15,10 @@ namespace Gallery.PL
     {
         public void Configuration(IAppBuilder app)
         {
-            var parseMsmqMessageQueue = MessageQueueParser.ParseMsmqMessageQueuePaths();
-            MessageQueueCreator.CreateMSMQMessageQueues(parseMsmqMessageQueue);
+            var parseMessageQueueDictionary = MessageQueueParser.ParseMessageQueuePathsDictionary();
 
-            var parseRabbitMQMessageQueue = MessageQueueParser.ParseRabbitMQMessageQueuePaths();
-            MessageQueueCreator.CreateRabbitMQMessageQueues(parseRabbitMQMessageQueue);
+            MessageQueueCreator.CreateMSMQMessageQueues(parseMessageQueueDictionary);
+            MessageQueueCreator.CreateRabbitMQMessageQueues(parseMessageQueueDictionary);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

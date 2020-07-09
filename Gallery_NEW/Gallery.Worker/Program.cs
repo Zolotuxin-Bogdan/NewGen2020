@@ -6,11 +6,10 @@ namespace Gallery.Worker
     {
         static void Main(string[] args)
         {
-            var parseMsmqMessageQueue = MessageQueueParser.ParseMsmqMessageQueuePaths();
-            MessageQueueCreator.CreateMSMQMessageQueues(parseMsmqMessageQueue);
+            var parseMessageQueueDictionary = MessageQueueParser.ParseMessageQueuePathsDictionary();
 
-            var parseRabbitMQMessageQueue = MessageQueueParser.ParseRabbitMQMessageQueuePaths();
-            MessageQueueCreator.CreateRabbitMQMessageQueues(parseRabbitMQMessageQueue);
+            MessageQueueCreator.CreateMSMQMessageQueues(parseMessageQueueDictionary);
+            MessageQueueCreator.CreateRabbitMQMessageQueues(parseMessageQueueDictionary);
 
             TopShelfConfig.Configure();
         }
