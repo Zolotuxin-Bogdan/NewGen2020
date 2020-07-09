@@ -17,9 +17,9 @@ namespace Gallery.MsgQueue.Services
 
             Dictionary<string, string> msgQueuePathsDictionary = new Dictionary<string, string>
             {
-                ["upload_image"] = upload_Image,
-                ["upload_mp3"] = upload_Mp3,
-                ["upload_mp4"] = upload_Mp4
+                ["upload-image"] = upload_Image,
+                ["upload-mp3"] = upload_Mp3,
+                ["upload-mp4"] = upload_Mp4
             };
 
             return msgQueuePathsDictionary;
