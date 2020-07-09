@@ -33,12 +33,11 @@ namespace Gallery.Worker.Works
 
         public async Task StartAsync()
         {
-            var parseMSMQMessageQueues = MessageQueueParser.ParseMsmqMessageQueuePaths();
-            var parseRabbitMQMessageQueue = MessageQueueParser.ParseRabbitMQMessageQueuePaths();
+            var parseMessageQueueDictionary = MessageQueueParser.ParseMessageQueuePathsDictionary();
 
             while (!_cancellationTokenSource.IsCancellationRequested)
             {
-                var messageDTO = _consumer.ReceiveFirstMessage<MessageDTO>(parseRabbitMQMessageQueue[0]);
+                var messageDTO = _consumer.ReceiveFirstMessage<MessageDTO>(parseMessageQueueDictionary["upload-image"]);
 
                 if (!File.Exists(messageDTO.TempPath))
                 {
