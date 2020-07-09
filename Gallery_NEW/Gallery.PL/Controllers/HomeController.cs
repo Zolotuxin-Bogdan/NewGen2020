@@ -102,10 +102,9 @@ namespace Gallery.Controllers
                 TempPath = mediaTempPath
             };
 
-            var parseMsmqMessageQueue = MessageQueueParser.ParseMsmqMessageQueuePaths();
-            var parseRabbitMQMessageQueue = MessageQueueParser.ParseRabbitMQMessageQueuePaths();
+            var parseMessageQueueDictionary = MessageQueueParser.ParseMessageQueuePathsDictionary();
 
-            _publisher.SendMessage(messageDTO, parseRabbitMQMessageQueue[0]);
+            _publisher.SendMessage(messageDTO, parseMessageQueueDictionary["upload-image"]);
 
             return RedirectToAction("Index");
         }
