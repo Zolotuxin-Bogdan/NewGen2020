@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gallery.MsgQueue.Azure
+namespace Gallery.MsgQueue.Azure.Implementation
 {
-    public class Class1
+    class AzureConsumer
     {
     }
 }
