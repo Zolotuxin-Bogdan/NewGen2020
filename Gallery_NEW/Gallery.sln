@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStorageProvider", "File
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.Worker", "Gallery.Worker\Gallery.Worker.csproj", "{2E899857-CA6E-44F4-B98E-7AC479FD45B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.MsgQueue", "Gallery.MsgQueue\Gallery.MsgQueue.csproj", "{AC1F0DC7-774D-48B8-9706-5A3441392D83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.MsgQueue.Service", "Gallery.MsgQueue\Gallery.MsgQueue.Service.csproj", "{AC1F0DC7-774D-48B8-9706-5A3441392D83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.MsgQueue.MSMQ", "Gallery.MsgQueue.MSMQ\Gallery.MsgQueue.MSMQ.csproj", "{3C375DAD-34C2-4924-9B58-AC56F3CEA07E}"
 EndProject

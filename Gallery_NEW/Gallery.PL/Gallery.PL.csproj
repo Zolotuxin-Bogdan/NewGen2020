@@ -287,9 +287,9 @@
       <Project>{1dd1d45a-2a03-4afd-a79e-a7e5912855c6}</Project>
       <Name>Gallery.DAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Gallery.MsgQueue\Gallery.MsgQueue.csproj">
+    <ProjectReference Include="..\Gallery.MsgQueue\Gallery.MsgQueue.Service.csproj">
       <Project>{AC1F0DC7-774D-48B8-9706-5A3441392D83}</Project>
-      <Name>Gallery.MsgQueue</Name>
+      <Name>Gallery.MsgQueue.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
