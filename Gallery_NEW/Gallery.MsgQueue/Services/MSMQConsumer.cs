@@ -8,7 +8,7 @@ namespace Gallery.MsgQueue.Services
 {
     public class MSMQConsumer : IConsumer
     {
-        public T ReceiveFirstMessage<T>(string messageQueuePath)
+        public void ConsumeFirstMessage<T>(string messageQueuePath, Action<T> action)
         {
             var messageQueue = new MessageQueue(messageQueuePath)
             {
@@ -17,8 +17,8 @@ namespace Gallery.MsgQueue.Services
                     typeof(string)
                 })
             };
-
-            return DeserializeJson<T>((string)messageQueue.Receive().Body);
+            var messageDto = DeserializeJson<T>((string)messageQueue.Receive().Body);
+            action(messageDto);
         }
 
         private static T DeserializeJson<T>(string obj) => 
