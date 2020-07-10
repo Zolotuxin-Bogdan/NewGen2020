@@ -55,8 +55,10 @@ namespace Gallery.BLL
             byte[] b1bytes = new byte[bytes];
             byte[] b2bytes = new byte[bytes];
 
-            BitmapData bitmapData1 = bmp1.LockBits(new Rectangle(0, 0, bmp1.Width, bmp1.Height), ImageLockMode.ReadOnly, bmp1.PixelFormat);
-            BitmapData bitmapData2 = bmp2.LockBits(new Rectangle(0, 0, bmp2.Width, bmp2.Height), ImageLockMode.ReadOnly, bmp2.PixelFormat);
+            BitmapData bitmapData1 = bmp1.LockBits(new Rectangle(0, 0, bmp1.Width, bmp1.Height), ImageLockMode.ReadOnly,
+                bmp1.PixelFormat);
+            BitmapData bitmapData2 = bmp2.LockBits(new Rectangle(0, 0, bmp2.Width, bmp2.Height), ImageLockMode.ReadOnly,
+                bmp2.PixelFormat);
 
             Marshal.Copy(bitmapData1.Scan0, b1bytes, 0, bytes);
             Marshal.Copy(bitmapData2.Scan0, b2bytes, 0, bytes);
@@ -100,7 +102,7 @@ namespace Gallery.BLL
                 var isMediaTypeExist = await _mediaRepository.IsMediaTypeExistAsync(mediaExtension);
                 if (!isMediaTypeExist)
                 {
-                    await _mediaRepository.RegisterMediaTypeToDataBaseAsync(new MediaType { Type = mediaExtension });
+                    await _mediaRepository.RegisterMediaTypeToDataBaseAsync(new MediaType {Type = mediaExtension});
                 }
 
                 var mediaType = await _mediaRepository.GetMediaTypeByTypeAsync(mediaExtension);
@@ -188,7 +190,7 @@ namespace Gallery.BLL
             {
                 FileInfo fileInfo = new FileInfo(tempPath);
                 BitmapSource img = BitmapFrame.Create(fileStream);
-                BitmapMetadata md = (BitmapMetadata)img.Metadata;
+                BitmapMetadata md = (BitmapMetadata) img.Metadata;
 
                 //
                 // Title from EXIF
@@ -270,6 +272,31 @@ namespace Gallery.BLL
             return exifDto;
         }
 
+        public async Task MoveTempImageToUserDirectoryAsync(MessageDTO messageDto)
+        {
+            if (!File.Exists(messageDto.TempPath))
+            {
+                throw new FileNotFoundException("File is missing:", messageDto.TempPath);
+            }
 
+            var isTempMediaExist =
+                await _mediaRepository.IsTempMediaExistByNameAndLoadingStatusAsync(messageDto.FileName, true);
+
+            if (isTempMediaExist)
+            {
+                var tempMedia =
+                    await _mediaRepository.GetTempMediaByNameAndLoadingStatusAsync(messageDto.FileName, true);
+
+                var newTempMedia = tempMedia;
+
+                newTempMedia.IsLoading = false;
+                newTempMedia.IsSuccess = true;
+
+                var fileBytes = _mediaStorage.Read(messageDto.TempPath);
+                await UploadImageAsync(fileBytes, messageDto.MainPath, messageDto.UserId);
+
+                await _mediaRepository.ChangeTempMediaAsync(tempMedia, newTempMedia);
+            }
+        }
     }
 }

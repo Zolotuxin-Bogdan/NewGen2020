@@ -19,5 +19,7 @@ namespace Gallery.BLL
        Task<bool> DeleteMediaAsync(string path);
 
        ExifDTO GetExifData(string tempPath);
+
+       Task MoveTempImageToUserDirectoryAsync(MessageDTO messageDto);
     }
 }
