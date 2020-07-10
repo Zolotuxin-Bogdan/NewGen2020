@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Text;
+using System.Threading;
 using Gallery.MsgQueue.Interfaces;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -10,7 +11,8 @@ namespace Gallery.MsgQueue.Services
 {
     public class RabbitMQConsumer : IConsumer
     {
-        public T ReceiveFirstMessage<T>(string messageQueuePath)
+        private readonly TimeSpan _delayTime = TimeSpan.FromSeconds(1);
+        public void ConsumeFirstMessage<T>(string messageQueuePath, Action<T> action)
         {
             var connectionString = new Uri(ParseRabbitMQConnectionString());
             var factory = new ConnectionFactory() {Uri = connectionString };
@@ -18,9 +20,20 @@ namespace Gallery.MsgQueue.Services
             {
                 using (var channel = connection.CreateModel())
                 {
-                    var result = channel.BasicGet(messageQueuePath, true);
-                    var messageBody = result.Body.ToArray();
-                    return DeserializeJson<T>(DeserializeBytes(messageBody));
+                    while (true)
+                    {
+                        var msgCount = channel.MessageCount(messageQueuePath);
+                        if (msgCount > 0)
+                        {
+                            var result = channel.BasicGet(messageQueuePath, true);
+                            var messageBody = result.Body.ToArray();
+                            var messageDto = DeserializeJson<T>(DeserializeBytes(messageBody));
+                            action(messageDto);
+                            break;
+                        }
+
+                        Thread.Sleep(_delayTime);
+                    }
                 }
             }
         }
