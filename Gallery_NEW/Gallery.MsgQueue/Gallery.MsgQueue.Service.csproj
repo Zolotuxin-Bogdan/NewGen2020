@@ -112,8 +112,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MessageQueueCreator.cs" />
     <Compile Include="Services\MessageQueueParser.cs" />
-    <Compile Include="Services\MSMQConsumer.cs" />
-    <Compile Include="Services\MSMQPublisher.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gallery.BLL\Gallery.BLL.csproj">

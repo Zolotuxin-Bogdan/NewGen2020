@@ -14,6 +14,7 @@ using Gallery.MsgQueue.Interfaces;
 using Gallery.PL.Interfaces;
 using Gallery.PL.Services;
 using Gallery.MsgQueue.RabbitMQ.Implementation;
+using Gallery.MsgQueue.MSMQ.Implementation;
 
 namespace Gallery.PL.App_Start
 {

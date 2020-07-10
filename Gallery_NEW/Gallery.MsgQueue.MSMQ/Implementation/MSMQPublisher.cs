@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Messaging;
-using Gallery.BLL.Contracts;
 using Gallery.MsgQueue.Interfaces;
 using Newtonsoft.Json;
 
-namespace Gallery.MsgQueue.Services
+namespace Gallery.MsgQueue.MSMQ.Implementation
 {
     public class MSMQPublisher : IPublisher
     {
