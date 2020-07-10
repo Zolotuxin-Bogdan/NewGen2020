@@ -1,20 +1,31 @@
-Gallery_OLD
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+[Pp]ackages/
+
+# Visual Studio cache/options directory
 .vs
-Gallery_NEW/packages
-Gallery_NEW/Gallery.PL/obj
-Gallery_NEW/Gallery.PL/bin
-Gallery_NEW/Gallery.BLL/obj
-Gallery_NEW/Gallery.BLL/bin
-Gallery_NEW/Gallery.DAL/obj
-Gallery_NEW/Gallery.DAL/bin
-Gallery_NEW/Gallery.Worker/obj
-Gallery_NEW/Gallery.Worker/bin
-Gallery_NEW/Gallery.MsgQueue/obj
-Gallery_NEW/Gallery.MsgQueue/bin
-Gallery_NEW/Gallery.PL/logs
-Gallery_NEW/Gallery.Worker/logs
-Gallery_NEW/Gallery.DAL/DataBase
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ReSharper is a .NET coding add-in
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# Other not necessary project folders
 Gallery_NEW/Gallery.PL/Upload
 Gallery_NEW/Gallery.PL/Temp
-Gallery_NEW/FileStorageProvider/obj
-Gallery_NEW/FileStorageProvider/bin
