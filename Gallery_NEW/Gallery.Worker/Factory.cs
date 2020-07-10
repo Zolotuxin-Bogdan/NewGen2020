@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FileStorageProvider.Providers;
 using Gallery.BLL;
 using Gallery.DAL.Model;
 using Gallery.DAL.Repositories;
-using Gallery.MsgQueue.Services;
+using Gallery.MsgQueue.RabbitMQ.Implementation;
 using Gallery.Worker.Interfaces;
 using Gallery.Worker.Works;
 

@@ -5,9 +5,8 @@ using System.Threading;
 using Gallery.MsgQueue.Interfaces;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 
-namespace Gallery.MsgQueue.Services
+namespace Gallery.MsgQueue.RabbitMQ.Implementation
 {
     public class RabbitMQConsumer : IConsumer
     {

@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Gallery.MsgQueue.Interfaces;
+using System;
 using System.Configuration;
 using System.Text;
-using Gallery.MsgQueue.Interfaces;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 
-namespace Gallery.MsgQueue.Services
+namespace Gallery.MsgQueue.RabbitMQ.Implementation
 {
     public class RabbitMQPublisher : IPublisher
     {

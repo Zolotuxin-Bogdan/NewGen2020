@@ -13,7 +13,7 @@ using Gallery.DAL.Repositories.Interfaces;
 using Gallery.MsgQueue.Interfaces;
 using Gallery.PL.Interfaces;
 using Gallery.PL.Services;
-using Gallery.MsgQueue.Services;
+using Gallery.MsgQueue.RabbitMQ.Implementation;
 
 namespace Gallery.PL.App_Start
 {
