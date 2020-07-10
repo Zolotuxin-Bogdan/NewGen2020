@@ -23,8 +23,7 @@ namespace Gallery.Worker
             var uploadImageWork = new UploadImageWork(new RabbitMQConsumer(), 
                 new MediaService(new MediaStorageProvider(), 
                     new MediaRepository(new GalleryContext(connectionString.ConnectionString)), 
-                    new UsersRepository(new GalleryContext(connectionString.ConnectionString))), 
-                new MediaRepository(new GalleryContext(connectionString.ConnectionString)), new MediaStorageProvider());
+                    new UsersRepository(new GalleryContext(connectionString.ConnectionString))));
 
             return uploadImageWork;
         }
