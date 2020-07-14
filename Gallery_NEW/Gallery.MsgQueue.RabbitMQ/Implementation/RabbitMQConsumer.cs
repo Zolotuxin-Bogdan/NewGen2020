@@ -45,8 +45,8 @@ namespace Gallery.MsgQueue.RabbitMQ.Implementation
 
         private static string ParseRabbitMQConnectionString()
         {
-            var connectionString = ConfigurationManager.AppSettings["RabbitMQ:uri"] ??
-                                   throw new ArgumentException("RabbitMQ:uri");
+            var connectionString = ConfigurationManager.ConnectionStrings["RabbitMQ:connectionString"].ConnectionString 
+                                   ?? throw new ArgumentException("RabbitMQ:connectionString");
             return connectionString;
         }
     }
