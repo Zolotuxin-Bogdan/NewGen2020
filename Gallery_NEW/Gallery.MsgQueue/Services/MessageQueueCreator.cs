@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Messaging;
+using Azure.Storage.Queues;
 using RabbitMQ.Client;
 
 namespace Gallery.MsgQueue.Services
@@ -46,12 +47,29 @@ namespace Gallery.MsgQueue.Services
             }
         }
 
+        public static void CreateAzureMessageQueues(Dictionary<string, string> msgQueueDictionary)
+        {
+            var connectionString = ParseAzureMQConnectionString();
+            var queueServiceClient = new QueueServiceClient(connectionString);
+            foreach (var queue in msgQueueDictionary)
+            {
+                var queueClient = queueServiceClient.GetQueueClient(queue.Value);
+                queueClient.CreateIfNotExists();
+            }
+        }
+
         private static string ParseRabbitMQConnectionString()
         {
-            var connectionString = ConfigurationManager.AppSettings["RabbitMQ:uri"] ??
-                                   throw new ArgumentException("RabbitMQ:uri");
+            var connectionString = ConfigurationManager.ConnectionStrings["RabbitMQ:connectionString"].ConnectionString
+                                   ?? throw new ArgumentException("RabbitMQ:connectionString");
             return connectionString;
         }
 
+        private static string ParseAzureMQConnectionString()
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["AzureMQ:connectionString"].ConnectionString
+                                   ?? throw new ArgumentException("AzureMQ:connectionString");
+            return connectionString;
+        }
     }
 }
