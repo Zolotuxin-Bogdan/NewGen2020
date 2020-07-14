@@ -19,6 +19,7 @@ namespace Gallery.PL
 
             MessageQueueCreator.CreateMSMQMessageQueues(parseMessageQueueDictionary);
             MessageQueueCreator.CreateRabbitMQMessageQueues(parseMessageQueueDictionary);
+            MessageQueueCreator.CreateAzureMessageQueues(parseMessageQueueDictionary);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

@@ -10,6 +10,7 @@ namespace Gallery.Worker
 
             MessageQueueCreator.CreateMSMQMessageQueues(parseMessageQueueDictionary);
             MessageQueueCreator.CreateRabbitMQMessageQueues(parseMessageQueueDictionary);
+            MessageQueueCreator.CreateAzureMessageQueues(parseMessageQueueDictionary);
 
             TopShelfConfig.Configure();
         }
