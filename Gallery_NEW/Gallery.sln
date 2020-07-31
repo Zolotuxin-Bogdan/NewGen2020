@@ -13,13 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileStorageProvider", "File
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.Worker", "Gallery.Worker\Gallery.Worker.csproj", "{2E899857-CA6E-44F4-B98E-7AC479FD45B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.MsgQueue.Service", "Gallery.MsgQueue\Gallery.MsgQueue.Service.csproj", "{AC1F0DC7-774D-48B8-9706-5A3441392D83}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.MsgQueue.MSMQ", "Gallery.MsgQueue.MSMQ\Gallery.MsgQueue.MSMQ.csproj", "{3C375DAD-34C2-4924-9B58-AC56F3CEA07E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.MsgQueue.RabbitMQ", "Gallery.MsgQueue.RabbitMQ\Gallery.MsgQueue.RabbitMQ.csproj", "{2AABB145-15AC-4663-BD16-B69EA0792B25}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.MsgQueue.Azure", "Gallery.MsgQueue.Azure\Gallery.MsgQueue.Azure.csproj", "{B7E1E84D-333E-43F9-A921-EE89D03CDAA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery.MsgQueue.Service", "Gallery.MsgQueue.Service\Gallery.MsgQueue.Service.csproj", "{AC1F0DC7-774D-48B8-9706-5A3441392D83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,14 +69,6 @@ Global
 		{2E899857-CA6E-44F4-B98E-7AC479FD45B1}.Staging|Any CPU.Build.0 = Staging|Any CPU
 		{2E899857-CA6E-44F4-B98E-7AC479FD45B1}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
 		{2E899857-CA6E-44F4-B98E-7AC479FD45B1}.Testing|Any CPU.Build.0 = Testing|Any CPU
-		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Staging|Any CPU.ActiveCfg = Staging|Any CPU
-		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Staging|Any CPU.Build.0 = Staging|Any CPU
-		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
-		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Testing|Any CPU.Build.0 = Testing|Any CPU
 		{3C375DAD-34C2-4924-9B58-AC56F3CEA07E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3C375DAD-34C2-4924-9B58-AC56F3CEA07E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C375DAD-34C2-4924-9B58-AC56F3CEA07E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -101,6 +93,14 @@ Global
 		{B7E1E84D-333E-43F9-A921-EE89D03CDAA3}.Staging|Any CPU.Build.0 = Release|Any CPU
 		{B7E1E84D-333E-43F9-A921-EE89D03CDAA3}.Testing|Any CPU.ActiveCfg = Release|Any CPU
 		{B7E1E84D-333E-43F9-A921-EE89D03CDAA3}.Testing|Any CPU.Build.0 = Release|Any CPU
+		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Staging|Any CPU.ActiveCfg = Staging|Any CPU
+		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Staging|Any CPU.Build.0 = Staging|Any CPU
+		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{AC1F0DC7-774D-48B8-9706-5A3441392D83}.Testing|Any CPU.Build.0 = Testing|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

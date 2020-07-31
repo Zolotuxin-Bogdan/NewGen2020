@@ -7,8 +7,8 @@
     <ProjectGuid>{AC1F0DC7-774D-48B8-9706-5A3441392D83}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gallery.MsgQueue</RootNamespace>
-    <AssemblyName>Gallery.MsgQueue</AssemblyName>
+    <RootNamespace>Gallery.MsgQueue.Service</RootNamespace>
+    <AssemblyName>Gallery.MsgQueue.Service</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
