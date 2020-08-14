@@ -176,6 +176,10 @@
       <Project>{1DD1D45A-2A03-4AFD-A79E-A7E5912855C6}</Project>
       <Name>Gallery.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gallery.MsgQueue.Azure\Gallery.MsgQueue.Azure.csproj">
+      <Project>{B7E1E84D-333E-43F9-A921-EE89D03CDAA3}</Project>
+      <Name>Gallery.MsgQueue.Azure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gallery.MsgQueue.RabbitMQ\Gallery.MsgQueue.RabbitMQ.csproj">
       <Project>{2AABB145-15AC-4663-BD16-B69EA0792B25}</Project>
       <Name>Gallery.MsgQueue.RabbitMQ</Name>

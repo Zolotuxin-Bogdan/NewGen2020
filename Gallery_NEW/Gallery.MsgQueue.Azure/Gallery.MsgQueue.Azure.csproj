@@ -84,5 +84,11 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gallery.MsgQueue.Service\Gallery.MsgQueue.Service.csproj">
+      <Project>{AC1F0DC7-774D-48B8-9706-5A3441392D83}</Project>
+      <Name>Gallery.MsgQueue.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

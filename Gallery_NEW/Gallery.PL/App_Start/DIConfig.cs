@@ -10,6 +10,7 @@ using Gallery.BLL;
 using Gallery.DAL.Model;
 using Gallery.DAL.Repositories;
 using Gallery.DAL.Repositories.Interfaces;
+using Gallery.MsgQueue.Azure.Implementation;
 using Gallery.MsgQueue.Interfaces;
 using Gallery.PL.Interfaces;
 using Gallery.PL.Services;
@@ -57,19 +58,30 @@ namespace Gallery.PL.App_Start
             builder.RegisterType<HashService>()
                 .As<IHashService>();
 
-            //
+            /////
             // MSMQ registration
             //
 
             // builder.Register(p => new MSMQPublisher())
             //    .As<IPublisher>();
+            /////
 
-            //
+            /////
             // RabbitMQ registration
             //
 
-            builder.Register(p => new RabbitMQPublisher())
+            // builder.Register(p => new RabbitMQPublisher())
+            //    .As<IPublisher>();
+            /////
+
+            /////
+            // AzureMQ registration
+            //
+
+            builder.Register(p => new AzurePublisher())
                 .As<IPublisher>();
+            /////
+
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();

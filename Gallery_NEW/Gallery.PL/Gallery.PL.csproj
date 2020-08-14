@@ -287,6 +287,10 @@
       <Project>{1dd1d45a-2a03-4afd-a79e-a7e5912855c6}</Project>
       <Name>Gallery.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gallery.MsgQueue.Azure\Gallery.MsgQueue.Azure.csproj">
+      <Project>{B7E1E84D-333E-43F9-A921-EE89D03CDAA3}</Project>
+      <Name>Gallery.MsgQueue.Azure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gallery.MsgQueue.MSMQ\Gallery.MsgQueue.MSMQ.csproj">
       <Project>{3C375DAD-34C2-4924-9B58-AC56F3CEA07E}</Project>
       <Name>Gallery.MsgQueue.MSMQ</Name>
